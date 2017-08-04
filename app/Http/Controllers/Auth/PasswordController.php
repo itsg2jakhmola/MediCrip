@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class PasswordController extends Controller
 {
@@ -17,6 +20,8 @@ class PasswordController extends Controller
     | explore this trait and override any methods you wish to tweak.
     |
     */
+
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     use ResetsPasswords;
 

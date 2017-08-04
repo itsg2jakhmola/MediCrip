@@ -7,17 +7,17 @@
       
       <div class="radio">
         <label>
-          <input type="radio" name="o5" value="">
+          <input type="radio" name="user_type" value="1">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Patients</span>
         </label>
         <label>
-          <input type="radio" name="o5" value="">
+          <input type="radio" name="user_type" value="2">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Doctor</span>
         </label>
         <label>
-          <input type="radio" name="o5" value="">
+          <input type="radio" name="user_type" value="3">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Pharmacies</span>
         </label>
@@ -38,24 +38,7 @@
             </span>
         @endif
       </div>
-      <div class="form-group">
-        <input type="number" class="form-control" placeholder="Date of Birth">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Medical Number">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Address">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Phone Number">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Insurance Company">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Insurance Number">
-      </div>
+
       <div class="form-group">
         <input type="password" name="password" class="form-control" placeholder="Password">
         @if ($errors->has('password'))
@@ -72,6 +55,26 @@
             </span>
         @endif
       </div>
+
+      <div class="form-group">
+        <input type="text" name="dob" class="form-control" placeholder="Date of Birth">
+      </div>
+      <div class="form-group">
+        <input type="text" name="medical_number" class="form-control" placeholder="Medical Number">
+      </div>
+      <div class="form-group">
+        <input type="text" name="address" class="form-control" placeholder="Address">
+      </div>
+      <div class="form-group">
+        <input type="text" name="phone_number" class="form-control" placeholder="Phone Number">
+      </div>
+      <div class="form-group">
+        <input type="text" name="insurance_company" class="form-control" placeholder="Insurance Company">
+      </div>
+      <div class="form-group">
+        <input type="text" name="insurance_number" class="form-control" placeholder="Insurance Number">
+      </div>
+      
 
       <div class="form-group">
         <button class="btn btn-info col-md-12">Register</button>

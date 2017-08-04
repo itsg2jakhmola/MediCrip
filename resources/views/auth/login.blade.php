@@ -7,17 +7,17 @@
       {{ csrf_field() }}
       <div class="radio">
         <label>
-          <input type="radio" name="o5" value="">
+          <input type="radio" name="1" value="">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Patients</span>
         </label>
         <label>
-          <input type="radio" name="o5" value="">
+          <input type="radio" name="2" value="">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Doctor</span>
         </label>
         <label>
-          <input type="radio" name="o5" value="">
+          <input type="radio" name="3" value="">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Pharmacies</span>
         </label>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\AuthController;
+//use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -21,7 +21,7 @@ class PasswordController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+   // use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     use ResetsPasswords;
 

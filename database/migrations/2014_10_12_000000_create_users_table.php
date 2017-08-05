@@ -22,8 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('medical_number');
             $table->string('address');
             $table->integer('phone_number');
+            $table->string('doctor_practice');
+            $table->string('fax_number');
             $table->string('insurance_company');
             $table->string('insurance_number');
+            $table->string('lat');
+            $table->string('lng');
             $table->rememberToken();
             $table->timestamps();
         });

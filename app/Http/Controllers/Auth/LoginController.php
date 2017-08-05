@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -41,14 +43,21 @@ class LoginController extends Controller
 	        return $this->sendLockoutResponse( $request );
 	    }
 	    $credentials = $this->getCredentials( $request );
-	    if ( Auth::guard( $request['user_type'] )->attempt( [ 'user_type' => $request['user_type'] ] + $credentials, $request->has( 'remember' ) ) ) {
+	    $credentials['user_type'] = $request['user_type']; 
+	    //print_r($credentials);die;
+	    /*if ( Auth::guard( $request['user_type'] )->attempt( [ 'user_type' => $request['user_type'] ] + $credentials, $request->has( 'remember' ) ) ) {
 	        return $this->handleUserWasAuthenticated( $request, $throttles, $guard );
-	    }
+	    }*/
+
+
+       	if (Auth::attempt($credentials, $request->has('remember'))) {
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
 
 	    // check to see if they can login without the active flag
-	    if( Auth::guard( $guard )->attempt( $credentials ) ) {
+	    if( Auth::attempt( $credentials ) ) {
 	        // log them back out and send them back
-	        Auth::guard( $guard )->logout();
+	        Auth::logout();
 	        return redirect()->back()
 	            ->withInput( $request->only( $this->loginUsername(), 'remember' ) )
 	            ->withErrors([
@@ -60,4 +69,44 @@ class LoginController extends Controller
 	    }
 	    return $this->sendFailedLoginResponse( $request );
 	}
+
+	/**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->loginUsername() => 'required', 'password' => 'required',
+        ]);
+    }
+
+    /**
+     * Get the failed login response instance.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        return redirect()->back()
+            ->withInput($request->only($this->loginUsername(), 'remember'))
+            ->withErrors([
+                $this->loginUsername() => $this->getFailedLoginMessage(),
+            ]);
+    }
+
+    /**
+     * Get the failed login message.
+     *
+     * @return string
+     */
+    protected function getFailedLoginMessage()
+    {
+        return Lang::has('auth.failed')
+                ? Lang::get('auth.failed')
+                : 'These credentials do not match our records.';
+    }
 }

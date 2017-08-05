@@ -49,7 +49,7 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+           'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -63,16 +63,21 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'user_type' => $data['user_type'],
-            'dob' => $data['dob'],
-            'medical_number' => $data['medical_number'],
+            'dob' => ($data['dob']) ? $data['dob'] : '',
+            'medical_number' => ($data['medical_number']) ? $data['medical_number'] : '',
             'address' => $data['address'],
             'phone_number' => $data['phone_number'],
-            'insurance_company' => $data['insurance_company'],
-            'insurance_number' => $data['insurance_number'],
+            'doctor_practice' => ($data['doctor_practice']) ? $data['doctor_practice'] : '',
+            'fax_number' => ($data['fax_number']) ? $data['fax_number'] : '',
+            'lat' => $data['lat'],
+            'lng' => $data['lng'],
+            'insurance_company' => ($data['insurance_company']) ? $data['insurance_company'] : '' ,
+            'insurance_number' => ($data['insurance_number']) ? $data['insurance_number'] : '' ,
             'password' => bcrypt($data['password']),
         ]);
     }

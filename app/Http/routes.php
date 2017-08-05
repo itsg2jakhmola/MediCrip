@@ -15,17 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'web'], function () {
+Route::group(['middlewareGroups' => 'web', 'namespace' => 'Auth'], function () {
     Route::get('/login', 'AuthController@showLoginForm');
-    Route::post('/login', 'AuthController@login');
     Route::get('/logout', 'AuthController@logout');
     Route::post('/password/email', 'PasswordController@sendResetLinkEmail');
     Route::post('/password/reset', 'PasswordController@reset');
     Route::get('/password/reset/{token?}', 'PasswordController@showResetForm');
     Route::get('/register', 'AuthController@showRegistrationForm');
-    Route::post('/register', 'AuthController@register');
+    Route::post('/register/patient', 'AuthController@register');
+    Route::post('/register/doctor', 'AuthController@register');
+    Route::post('/register/pharmacy', 'AuthController@register');
+    Route::post('/login/', 'LoginController@login');
 });
 
-Route::auth();
+//Route::auth();
 
 Route::get('/home', 'HomeController@index');

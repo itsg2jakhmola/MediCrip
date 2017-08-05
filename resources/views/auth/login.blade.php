@@ -7,23 +7,24 @@
       {{ csrf_field() }}
       <div class="radio">
         <label>
-          <input type="radio" name="1" value="">
+          <input type="radio" name="user_type" value="1">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Patients</span>
         </label>
         <label>
-          <input type="radio" name="2" value="">
+          <input type="radio" name="user_type" value="2">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Doctor</span>
         </label>
         <label>
-          <input type="radio" name="3" value="">
+          <input type="radio" name="user_type" value="3">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Pharmacies</span>
         </label>
       </div>
       <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
         <input type="text" name="email" class="form-control users" placeholder="Username/Email">
+
         @if ($errors->has('email'))
             <span class="help-block">
                 <strong>{{ $errors->first('email') }}</strong>

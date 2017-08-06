@@ -12,8 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
+
 
 Route::group(['middlewareGroups' => 'web', 'namespace' => 'Auth'], function () {
     Route::get('/login', 'AuthController@showLoginForm');
@@ -26,6 +27,11 @@ Route::group(['middlewareGroups' => 'web', 'namespace' => 'Auth'], function () {
     Route::post('/register/doctor', 'AuthController@register');
     Route::post('/register/pharmacy', 'AuthController@register');
     Route::post('/login/', 'LoginController@login');
+
+    Route::get('/welcome', function () {
+        return view('welcome');
+    });
+
 });
 
 //Route::auth();

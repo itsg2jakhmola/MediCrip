@@ -16,6 +16,11 @@ Route::get('/', function () {
 });
 
 
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::get('/welcome', 'Admin\DashboardController@index');
+});
+
 Route::group(['middlewareGroups' => 'web', 'namespace' => 'Auth'], function () {
     Route::get('/login', 'AuthController@showLoginForm');
     Route::get('/logout', 'AuthController@logout');
@@ -28,12 +33,15 @@ Route::group(['middlewareGroups' => 'web', 'namespace' => 'Auth'], function () {
     Route::post('/register/pharmacy', 'AuthController@register');
     Route::post('/login/', 'LoginController@login');
 
-    Route::get('/welcome', function () {
+    /*Route::get('/welcome', function () {
         return view('welcome');
-    });
+    });*/
 
 });
 
 //Route::auth();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/admins', function(){
+        return view('admin.index');
+    });

@@ -51,16 +51,16 @@
             </div>
 
             <ul class="nav">
-                <li class="active">
+                <li {{ (current_page('dashboard')) ? 'class=active' : ''}}>
                     <a href="dashboard.html">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li>
-                    <a href="user.html">
+                <li {{ (current_page('user')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/user')}}">
                         <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
+                        <p>User Profile </p>
                     </a>
                 </li>
                 <li>
@@ -93,12 +93,7 @@
                         <p>Notifications</p>
                     </a>
                 </li>
-				<li class="active-pro">
-                    <a href="upgrade.html">
-                        <i class="pe-7s-rocket"></i>
-                        <p>Upgrade to PRO</p>
-                    </a>
-                </li>
+				
             </ul>
     	</div>
     </div>
@@ -279,7 +274,7 @@
 
         	$.notify({
             	icon: 'pe-7s-gift',
-            	message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
+            	message: "Welcome to <b>MedCrip</b> - a beautiful freebie for every web developer."
 
             },{
                 type: 'info',

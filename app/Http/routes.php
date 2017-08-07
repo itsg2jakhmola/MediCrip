@@ -16,9 +16,10 @@ Route::get('/', function () {
 });
 
 
-Route::group(['middleware' => 'auth'], function()
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
 {
     Route::get('/welcome', 'Admin\DashboardController@index');
+    Route::get('/user', 'Admin\UserController@index');
 });
 
 Route::group(['middlewareGroups' => 'web', 'namespace' => 'Auth'], function () {

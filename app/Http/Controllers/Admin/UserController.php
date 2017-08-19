@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Usertype;
 use App\Http\Requests;
+use DB;
+use App\User;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -13,12 +15,36 @@ class UserController extends Controller
     public function index()
     {
     	$user = Auth::user();
-    	$userType = Usertype::find($user->id);
+        $userId = intval($user->id);
+        
+    	$userType = Usertype::find($userId);
+    	//$userType = Usertype::where('id', '=', $user->id)->first();
+        
     	return view('admin.user.index', compact('user', 'userType'));
+    	                  
     }
 
-    public function update()
+    public function update(Request $request, $id)
+
     {
-    	
+
+    	print_r($request->all());die;
+
+        $this->validate($request, [
+
+            /*'title' => 'required',
+
+            'description' => 'required',*/
+
+        ]);
+
+        
+
+        User::find($id)->update($request->all());
+
+        return redirect()->back()
+
+                        ->with('success','Item updated successfully');
+
     }
 }

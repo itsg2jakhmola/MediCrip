@@ -15,11 +15,25 @@ Route::get('/', function () {
     return view('homepage');
 });
 
+// Display all SQL executed in Eloquent
+/*Event::listen('illuminate.query', function($query)
+{
+    var_dump($query);
+});*/
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
 {
     Route::get('/welcome', 'Admin\DashboardController@index');
     Route::get('/user', 'Admin\UserController@index');
+    Route::get('/apppoinment', 'Admin\AppoinmentController@index');
+    Route::get('/prescription', 'Admin\PrescriptionController@index');
+    Route::get('/medical_history', 'Admin\MedicalController@index');
+    Route::get('/review', 'Admin\ReviewController@index');
+    Route::get('/cancelation_list', 'Admin\CancelationListController@index');
+    Route::get('/add_prscriptions', 'Admin\AddPrescriptionController@index');
+    Route::get('/appoinment_reminder', 'Admin\ApppoinmentReminderController@index');
+    
+    Route::post('user/update/{user_id}', ['uses' =>'Admin\UserController@update', 'as' => 'admin.user.update']);
 });
 
 Route::group(['middlewareGroups' => 'web', 'namespace' => 'Auth'], function () {

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class PrescriptionController extends Controller
 {
-     public function index() {
-    	return view('admin.welcome');
+     public function index(){
+    	return view('admin.user.prescription');
     }
 }

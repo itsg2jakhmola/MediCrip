@@ -66,15 +66,30 @@
 
       <div class="form-group">
         <input type="text" name="dob" id="dob" class="form-control" placeholder="Date of Birth">
+        @if ($errors->has('dob'))
+            <span class="help-block">
+                <strong>{{ $errors->first('dob') }}</strong>
+            </span>
+        @endif
       </div>
       <div class="form-group">
         <input type="text" name="medical_number" class="form-control" placeholder="Medical Number">
       </div>
       <div class="form-group">
         <input type="text" name="address" id="address" class="form-control" placeholder="Address">
+        @if ($errors->has('address'))
+            <span class="help-block">
+                <strong>{{ $errors->first('address') }}</strong>
+            </span>
+        @endif
       </div>
       <div class="form-group">
         <input type="text" name="phone_number" class="form-control" placeholder="Phone Number">
+        @if ($errors->has('phone_number'))
+            <span class="help-block">
+                <strong>{{ $errors->first('phone_number') }}</strong>
+            </span>
+        @endif
       </div>
       <div class="form-group">
         <input type="text" name="insurance_company" class="form-control" placeholder="Insurance Company">

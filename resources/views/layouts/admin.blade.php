@@ -51,48 +51,88 @@
             </div>
 
             <ul class="nav">
-                <li {{ (current_page('dashboard')) ? 'class=active' : ''}}>
-                    <a href="dashboard.html">
+             <li {{ (current_page('welcome')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/welcome')}}">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
-                </li>
+                </li> 
                 <li {{ (current_page('user')) ? 'class=active' : ''}}>
                     <a href="{{url('/admin/user')}}">
                         <i class="pe-7s-user"></i>
                         <p>User Profile </p>
                     </a>
                 </li>
-                <li>
-                    <a href="table.html">
+
+                
+                <li {{ (current_page('apppoinment')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/apppoinment')}}">
                         <i class="pe-7s-note2"></i>
-                        <p>Table List</p>
+                        <p>Apppoinment</p>
                     </a>
                 </li>
-                <li>
-                    <a href="typography.html">
+                
+
+                @if(auth()->user()->user_type == 2)
+                <li {{ (current_page('appoinment_reminder')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/appoinment_reminder')}}">
+                        <i class="pe-7s-note2"></i>
+                        <p>Appoinment Reminder</p>
+                    </a>
+                </li>
+                @endif
+
+                @if(auth()->user()->user_type == 2)
+                <li {{ (current_page('cancelation_list')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/cancelation_list')}}">
+                        <i class="pe-7s-note2"></i>
+                        <p>Cancelation List</p>
+                    </a>
+                </li>
+                @endif
+
+                @if( auth()->user()->user_type == 1 || auth()->user()->user_type == 3)
+                <li {{ (current_page('prescription')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/prescription')}}">
                         <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
+                        <p>Prescription List</p>
                     </a>
                 </li>
-                <li>
-                    <a href="icons.html">
+                @endif
+
+                @if(auth()->user()->user_type == 3)
+                <li {{ (current_page('add_prscription')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/add_prscriptions')}}">
+                        <i class="pe-7s-news-paper"></i>
+                        <p>New Prescription</p>
+                    </a>
+                </li>
+                @endif
+
+                @if(auth()->user()->user_type == 1)
+                <li {{ (current_page('medical_history')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/medical_history')}}">
                         <i class="pe-7s-science"></i>
-                        <p>Icons</p>
+                        <p>Medical History</p>
                     </a>
                 </li>
-                <li>
-                    <a href="maps.html">
+                @endif
+
+                @if(auth()->user()->user_type == 1)
+                <li {{ (current_page('review')) ? 'class=active' : ''}}>
+                    
+                    <a href="{{url('/admin/review')}}">
                         <i class="pe-7s-map-marker"></i>
-                        <p>Maps</p>
+                        <p>Review</p>
                     </a>
                 </li>
-                <li>
+                @endif
+                <!-- <li>
                     <a href="notifications.html">
                         <i class="pe-7s-bell"></i>
                         <p>Notifications</p>
                     </a>
-                </li>
+                </li> -->
 				
             </ul>
     	</div>

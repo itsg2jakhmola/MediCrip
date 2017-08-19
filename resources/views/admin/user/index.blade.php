@@ -10,13 +10,29 @@
                             <div class="header">
                                 <h4 class="title">Edit Profile</h4>
                             </div>
+                                
+                                @if ($message = Session::get('success'))
+
+                                    <div class="alert alert-success">
+
+                                        <p>{{ $message }}</p>
+
+                                    </div>
+
+                                @endif
+
                             <div class="content">
-                                <form>
+
+                            <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.user.update', ['user/update' => $user->id]) }}">
+                            
+                            {{ csrf_field() }}
+
+
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Accont (disabled)</label>
-                                                <input type="text" class="form-control" disabled placeholder="Company" value="{{$userType->name}}">
+                                                <input type="text" class="form-control" disabled placeholder="Company" value="">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -88,6 +104,7 @@
                                     </div>
 
                                     <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
+                                    
                                     <div class="clearfix"></div>
                                 </form>
                             </div>

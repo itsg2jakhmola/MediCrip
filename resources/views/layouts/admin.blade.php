@@ -24,6 +24,7 @@
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{asset('admin/assets/css/demo.css')}}" rel="stylesheet" />
+    <link href="{{asset('admin/assets/css/lightbox.min.css')}}" rel="stylesheet" />
 
 
     <!--     Fonts and icons     -->
@@ -304,6 +305,8 @@
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="{{asset('admin/assets/js/light-bootstrap-dashboard.js')}}"></script>
+
+    <script src="{{asset('admin/assets/js/lightbox-plus-jquery.js')}}"></script>
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 

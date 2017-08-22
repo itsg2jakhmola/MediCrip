@@ -17,57 +17,50 @@
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
                                     <thead>
-                                        <th>ID</th>
                                         <th>Name</th>
-                                        <th>Salary</th>
-                                        <th>Country</th>
-                                        <th>City</th>
+                                        <th>Description</th>
+                                        <th>Medical Scan</th>
+                                        <th>Medical ScanDt</th>
+                                        <th>Created at</th>
+                                        <th>Action</th>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Dakota Rice</td>
-                                            <td>$36,738</td>
-                                            <td>Niger</td>
-                                            <td>Oud-Turnhout</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Minerva Hooper</td>
-                                            <td>$23,789</td>
-                                            <td>Curaçao</td>
-                                            <td>Sinaai-Waas</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Sage Rodriguez</td>
-                                            <td>$56,142</td>
-                                            <td>Netherlands</td>
-                                            <td>Baileux</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Philip Chaney</td>
-                                            <td>$38,735</td>
-                                            <td>Korea, South</td>
-                                            <td>Overland Park</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Doris Greene</td>
-                                            <td>$63,542</td>
-                                            <td>Malawi</td>
-                                            <td>Feldkirchen in Kärnten</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>Mason Porter</td>
-                                            <td>$78,615</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                   
+                    <tbody>
+                        @if (count($medical_detail) > 0)
+
+                            @foreach ($medical_detail as $info)
+                                 <tr data-entry-id="{{ $info->id }}">
+                                    <td> {{ ucfirst($info->name) }} </td>
+                                    <td> {{ ucfirst($info->description) }} </td>
+                                    <!-- <td> {{ $info->medical_scan }}</td> -->
+                                    <td>
+                                        <a class="example-image-link imgLightBox" href="{{ $info->medical_scan_path  }}" data-lightbox="example-1"> 
+
+
+                                        <img src="{{ $info->medical_scan_path }}" class="img-circle imgLightBox img-thumbnail example-image" alt="profile-image"> </a> </td>
+                                        <td> {{ $info->medical_scan_dt }}</td>
+                                    <td> 
+                                        <span style="display:none;">                                            
+                                            {{ \Carbon\Carbon::parse($info->created_at)->format('Y/m/d')}}
+                                        </span>
+                                        {{ $info->created_at }}                                         
+                                    </td>
+                                     <td>
+                                        <!--<a href="{{ route('admin.medical_history.show',[$info->id]) }}" class="btn btn-xs btn-primary" title="View"><i class="mdi mdi-magnify"></i>View</a>-->
+                                        <a href="{{ route('admin.medical_history.show',[$info->id]) }}" target="_blank" class="btn btn-xs btn-primary" title="View"><i class="mdi mdi-magnify"></i>View</a>
+                                        <a href="{{ route('admin.medical_history.edit',[$info->id]) }}" class="btn btn-xs btn-info" title="Edit">Edit<i class="mdi mdi-pencil"></i></a>
+                                        {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'DELETE',
+                                        'onsubmit' => "return confirm('".trans("Are you Sure ?")."');",
+                                        'route' => ['admin.medical_history.destroy', $info->id])) !!}
+                                        <button type="submit" class="btn btn-xs btn-danger" title="Delete"><i class="mdi mdi-delete">Delete</i></button>
+                                        {!! Form::close() !!}                                        
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
 
                             </div>
                         </div>

@@ -62,3 +62,15 @@
 .smpad{
     padding: 5px;
 }
+
+.medicineBtn {
+    float: left !important;
+    margin-top: 92px;
+    position: relative;
+    right: 48%;
+}
+
+.imgLightBox{
+    height: 50px;
+    width: 50px;"
+}

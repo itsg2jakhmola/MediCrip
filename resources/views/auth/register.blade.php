@@ -65,7 +65,7 @@
       </div>
 
       <div class="form-group">
-        <input type="text" name="dob" id="dob" class="form-control" placeholder="Date of Birth">
+        <input type="text" name="dob" id="dob" required="" class="form-control" placeholder="Date of Birth">
         @if ($errors->has('dob'))
             <span class="help-block">
                 <strong>{{ $errors->first('dob') }}</strong>
@@ -73,7 +73,26 @@
         @endif
       </div>
       <div class="form-group">
-        <input type="text" name="medical_number" class="form-control" placeholder="Medical Number">
+
+      <div class="radio">
+      <label>
+        <span>Medical Number ?</span>
+      </label>
+        <label>
+          <input type="radio" onclick="show(event);" id="medical" checked="" name="medical_no" value="1">
+          <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+          <span>Yes</span>
+        </label>
+        <label>
+          <input type="radio" onclick="hide(event);" id="medical" name="medical_no" value="0">
+          <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+          <span>No</span>
+        </label>
+        
+      </div>
+    
+        <input type="text" id="medicalSetting" name="medical_number" class="form-control" placeholder="Medical Number">
+    
       </div>
       <div class="form-group">
         <input type="text" name="address" id="address" class="form-control" placeholder="Address">
@@ -92,10 +111,45 @@
         @endif
       </div>
       <div class="form-group">
-        <input type="text" name="insurance_company" class="form-control" placeholder="Insurance Company">
+
+      <div class="radio">
+      <label>
+        <span>Insurance Company ?</span>
+      </label>
+        <label>
+          <input type="radio" onclick="show(event);" id="insurance" checked="" name="insurance_co" value="1">
+          <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+          <span>Yes</span>
+        </label>
+        <label>
+          <input type="radio" onclick="hide(event);" id="insurance" name="insurance_co" value="0">
+          <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+          <span>No</span>
+        </label>
+        
+      </div>
+
+        <input type="text" id="insuranceSetting" name="insurance_company" class="form-control" placeholder="Insurance Company">
       </div>
       <div class="form-group">
-        <input type="text" name="insurance_number" class="form-control" placeholder="Insurance Number">
+
+      <div class="radio">
+      <label>
+        <span>Insurance Number ?</span>
+      </label>
+        <label>
+          <input type="radio" onclick="show(event);" id="insuranceNumber" checked="" name="insurance_no" value="1">
+          <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+          <span>Yes</span>
+        </label>
+        <label>
+          <input type="radio" onclick="hide(event);" id="insuranceNumber" name="insurance_no" value="0">
+          <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+          <span>No</span>
+        </label>
+        
+      </div>
+        <input type="text" id="insuranceNumberSetting" name="insurance_number" class="form-control" placeholder="Insurance Number">
       </div>
       <div class="form-group geo-details">
           <input placeholder="Input Latitude .." id="latitude" class="form-control" name="lat" type="hidden" value="">
@@ -159,7 +213,7 @@
         <input type="text" name="dob" class="form-control" placeholder="Date of Birth">
       </div> -->
       <div class="form-group">
-        <input type="text" name="doctor_practice" class="form-control" placeholder="Name of Doctor Practice">
+        <input type="text" name="doctor_practice" required class="form-control" placeholder="Name of Doctor Practice">
       </div>
       <div class="form-group">
         <input type="text" name="address" id="doctor_address" class="form-control" placeholder="Address">

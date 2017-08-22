@@ -9,7 +9,7 @@
                         <div class="card">
                             <div class="header">
 
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Add Medical</button>
+                                <a href="{{route('admin.medical_history.create')}}" class="btn btn-info btn-fill pull-right">Add Medical</a>
 
                                 <h4 class="title">Striped Table with Hover</h4>
                                 <p class="category">Here is a subtitle for this table</p>

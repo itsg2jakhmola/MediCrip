@@ -1,10 +1,19 @@
 function swapConfig(x) {
+	var medCrip = '';
     var medCrip = document.getElementsByName(x.name);
     for(i = 0 ; i < medCrip.length; i++){
      document.getElementById(medCrip[i].id.concat("Settings")).style.display="none";
     }
     document.getElementById(x.id.concat("Settings")).style.display="initial";
   }
+
+ function show(event) {
+ 	document.getElementById(event.target.id.concat("Setting")).style.display = 'block'; 
+ }
+
+ function hide(event) { 
+ 	document.getElementById(event.target.id.concat("Setting")).style.display = 'none'; 
+ }
 
    $("#address, #doctor_address, #pharmacy_address").geocomplete({
               details: ".geo-details",
@@ -21,6 +30,12 @@ function swapConfig(x) {
 	  });
 
 	$('#dob').datepicker({
+	    dateFormat: 'dd-mm-yy', 
+	    autoclose: true,
+	    todayHighlight: true
+	}); 
+
+	$('#scan_dt').datepicker({
 	    dateFormat: 'dd-mm-yy', 
 	    autoclose: true,
 	    todayHighlight: true

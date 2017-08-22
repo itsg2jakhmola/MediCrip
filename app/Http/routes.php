@@ -27,7 +27,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
     Route::get('/user', 'Admin\UserController@index');
     Route::get('/apppoinment', 'Admin\AppoinmentController@index');
     Route::get('/prescription', 'Admin\PrescriptionController@index');
-    Route::get('/medical_history', 'Admin\MedicalController@index');
+    Route::resource('medical_history', 'Admin\MedicalHistoryController');
     Route::get('/review', 'Admin\ReviewController@index');
     Route::get('/cancelation_list', 'Admin\CancelationListController@index');
     Route::get('/add_prscriptions', 'Admin\AddPrescriptionController@index');

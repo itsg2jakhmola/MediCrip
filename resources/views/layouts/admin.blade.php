@@ -10,6 +10,7 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!-- Bootstrap core CSS     -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" />
@@ -303,6 +304,8 @@
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="{{asset('admin/assets/js/light-bootstrap-dashboard.js')}}"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="{{asset('admin/assets/js/demo.js')}}"></script>

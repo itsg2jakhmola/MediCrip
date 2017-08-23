@@ -120,6 +120,8 @@ class MedicalHistoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        //dd($request->all());
          $this->validate($request, [
                 'name'     => 'required',
                 'description'  => 'required',
@@ -138,6 +140,7 @@ class MedicalHistoryController extends Controller
 
             $medical_history->name = $request->input('name');
             $medical_history->description = $request->input('description');
+            $medical_history->medical_scan_dt = $request->input('medical_scan_dt'); 
             $medical_history->save();
             
             if ($request->hasFile('medical_scan')) {
@@ -150,7 +153,7 @@ class MedicalHistoryController extends Controller
 
                 $medical_history->medical_scan = $fileName;
                 $medical_history->medical_scan_path = '/images/medicalhistory/' . $fileName;
-                $medical_history->medical_scan_dt = $request->input('medical_scan_dt'); 
+                
                 $medical_history->save();
             }
 

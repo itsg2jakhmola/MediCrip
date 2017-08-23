@@ -34,10 +34,10 @@
                                     <td> {{ ucfirst($info->description) }} </td>
                                     <!-- <td> {{ $info->medical_scan }}</td> -->
                                     <td>
-                                        <a class="example-image-link imgLightBox" href="{{ $info->medical_scan_path  }}" data-lightbox="example-1"> 
+                                        <a class="example-image-link imgLightBox" href="{{url( $info->medical_scan_path )}}" data-lightbox="example-1"> 
 
 
-                                        <img src="{{ $info->medical_scan_path }}" class="img-circle imgLightBox img-thumbnail example-image" alt="profile-image"> </a> </td>
+                                        <img src="{{url( $info->medical_scan_path )}}" class="img-circle imgLightBox img-thumbnail example-image" alt="profile-image"> </a> </td>
                                         <td> {{ $info->medical_scan_dt }}</td>
                                     <td> 
                                         <span style="display:none;">                                            

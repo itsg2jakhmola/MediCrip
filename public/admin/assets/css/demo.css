@@ -70,7 +70,8 @@
     right: 48%;
 }
 
-.imgLightBox{
-    height: 50px;
-    width: 50px;"
+.imgLightBox {
+    height: 75px;
+    width: 75px;
+    border-radius : 0px;
 }

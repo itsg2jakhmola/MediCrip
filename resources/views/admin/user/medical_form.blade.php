@@ -59,7 +59,7 @@
                                         </div>
                                     
                                     <div class="row smpad"> 
-                                    <button type="submit" class="medicineBtn btn btn-info btn-fill pull-right">Update Profile</button>
+                                    <button type="submit" class="medicineBtn btn btn-info btn-fill pull-right">Submit</button>
                                     </div>
 
                                     <div class="clearfix"></div>

@@ -11,11 +11,11 @@
 
                                 <a href="{{route('admin.medical_history.create')}}" class="btn btn-info btn-fill pull-right">Add Medical</a>
 
-                                <h4 class="title">Striped Table with Hover</h4>
-                                <p class="category">Here is a subtitle for this table</p>
+                                <h4 class="title">Medical History</h4>
+                                <p class="category"> <b> Total : </b> {{count($medical_detail)}}</p>
                             </div>
                             <div class="content table-responsive table-full-width">
-                                <table class="table table-hover table-striped">
+                                <table id="myMedicalHistory" class="table table-hover table-striped display nowrap" width="100%" cellspacing="0">
                                     <thead>
                                         <th>Name</th>
                                         <th>Description</th>
@@ -74,3 +74,14 @@
         </div>
 
 @endsection
+
+<script>
+$(document).ready(function() {
+    $('#myMedicalHistory').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>

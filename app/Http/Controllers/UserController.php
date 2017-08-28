@@ -39,6 +39,8 @@ class UserController extends Controller
             'user_type' => $data['user_type'],
             'dob' => ($data['dob']) ? $data['dob'] : '',
             'medical_number' => ($data['medical_number']) ? $data['medical_number'] : '',
+            'doctor_practice' => ($data['doctor_practice']) ? $data['doctor_practice'] : '',
+            'fax_number' => ($data['fax_number']) ? $data['fax_number'] : '',
             'address' => $data['address'],
             'phone_number' => $data['phone_number'],
             'lat' => $data['lat'],

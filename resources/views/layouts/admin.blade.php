@@ -73,8 +73,8 @@
                 </li>
 
                 
-                <li {{ (current_page('apppoinment')) ? 'class=active' : ''}}>
-                    <a href="{{url('/admin/apppoinment')}}">
+                <li {{ (current_page('appointment_setting')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/appointment_setting')}}">
                         <i class="pe-7s-note2"></i>
                         <p>Apppoinment</p>
                     </a>

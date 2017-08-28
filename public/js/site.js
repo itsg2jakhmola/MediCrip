@@ -15,6 +15,14 @@ function swapConfig(x) {
  	document.getElementById(event.target.id.concat("Setting")).style.display = 'none'; 
  }
 
+
+ function showLogin(event) {
+ 	
+ 	var elems = document.getElementsByClassName(event.target.className.concat("Setting"));
+ 	for (var i=0;i<elems.length;i+=1){
+	  elems[i].style.display = 'block';
+	} 
+ }
    $("#address, #doctor_address, #pharmacy_address").geocomplete({
               details: ".geo-details",
               detailsAttribute: "data-geo",

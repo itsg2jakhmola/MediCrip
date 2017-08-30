@@ -20,15 +20,19 @@
                             <th>Description/Notes</th>
                             <td>{{ $appointment_detail->notes }}</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>Nearby Doctor</th>
                             <td>{{ $appointment_detail->nearby_doctor }}</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th>Appointment Date/Time</th>
                             <td>{{ $appointment_detail->appointment_time }}</td>
                         </tr>
                         
+                        <tr>
+                            <th>Doctor Recommended Prescription</th>
+                            <td>{{ ($appointment_detail['prescriptions']) ? $appointment_detail['prescriptions']->prescription : 'Pending'}}</td>
+                        </tr>
                         
                     </table>
                 </div>

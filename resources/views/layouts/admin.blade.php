@@ -72,14 +72,23 @@
                     </a>
                 </li>
 
-                
+                @if(auth()->user()->user_type == 1)
                 <li {{ (current_page('appointment_setting')) ? 'class=active' : ''}}>
                     <a href="{{url('/admin/appointment_setting')}}">
                         <i class="pe-7s-note2"></i>
                         <p>Apppoinment</p>
                     </a>
                 </li>
-                
+                @endif
+
+                @if(auth()->user()->user_type == 2)
+                <li {{ (current_page('docappoint_setting')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/docappoint_setting')}}">
+                        <i class="pe-7s-note2"></i>
+                        <p>Apppoinment List</p>
+                    </a>
+                </li>
+                @endif
 
                 @if(auth()->user()->user_type == 2)
                 <li {{ (current_page('appoinment_reminder')) ? 'class=active' : ''}}>
@@ -167,6 +176,19 @@
                             </a>
                         </li>
                         <li class="dropdown">
+
+                             <!-- <div class="deshboard-links nlist">
+                                <a href="javascript:void(0)" class="dropdown-toggle ncount" data-toggle="dropdown" data-ncount="{{Auth::user()->notification_count}}">
+                                    <i class="mdi mdi-bell"></i>
+                                    <span class="label label-danger">{{Auth::user()->notification_count}}</span>
+                                </a>
+                                <div class="ncontainer">
+                                    <ul class="nscroll" data-total="" data-nextPage="" style="overflow-y:scroll; max-height: 330px; cursor:pointer">
+                                    </ul>
+                                </div>
+                            </div> -->
+
+
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-globe"></i>
                                     <b class="caret hidden-sm hidden-xs"></b>

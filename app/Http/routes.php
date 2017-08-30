@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
     Route::get('/prescription', 'Admin\PrescriptionController@index');
     Route::resource('medical_history', 'Admin\MedicalHistoryController');
     Route::resource('appointment_setting', 'Admin\MyAppointmentController');
+    Route::resource('docappoint_setting', 'Admin\doctorAppointmentController');
     Route::get('/review', 'Admin\ReviewController@index');
     Route::get('/cancelation_list', 'Admin\CancelationListController@index');
     Route::get('/add_prscriptions', 'Admin\AddPrescriptionController@index');
@@ -37,6 +38,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
     Route::post('user/update/{user_id}', ['uses' =>'Admin\UserController@update', 'as' => 'admin.user.update']);
 });
 
+
+Route::group(['prefix' => '/api', 'namespace' => 'Api', 'middleware' => 'auth'], function () {
+  // Notifications
+  Route::get('user/notify', 'NotificationController@index');
+  Route::get('user/notifications', 'NotificationController@getMessages');
+  Route::post('user/shownotifications', 'NotificationController@showMessages');
+  Route::post('user/readnotification', 'NotificationController@readMessage');
+
+});
 Route::group(['middlewareGroups' => 'web', 'namespace' => 'Auth'], function () {
     Route::get('/login', 'AuthController@showLoginForm');
     Route::get('/logout', 'AuthController@logout');

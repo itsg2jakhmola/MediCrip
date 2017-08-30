@@ -9,7 +9,9 @@
                         <div class="card">
                             <div class="header">
 
-                                <a href="{{route('admin.appointment_setting.create')}}" class="btn btn-info btn-fill pull-right">Add Appointment</a>
+                            @include('includes.flash')
+
+                                <a href="{{route('admin.docappoint_setting.create')}}" class="btn btn-info btn-fill pull-right">Add Appointment</a>
 
                                 <h4 class="title">Appointment History</h4>
                                 <p class="category"> <b> Total : {{count($appointment_list)}} </b> </p>
@@ -17,10 +19,9 @@
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
                                     <thead>
-                                        <th>Doctor Speciality</th>
+                                        <th>Patient Name</th>
                                         <th>Notes</th>
-                                        <!-- <th>Nearby_doctor</th> -->
-                                        <th>Seen By Doctor</th>
+                                        <th>Patient Email</th>
                                         <th>Appointment Date/Time</th>
                                         
                                     </thead>
@@ -28,12 +29,10 @@
                                         @if (count($appointment_list) > 0)
 
                                 @foreach ($appointment_list as $info)
-
                                  <tr data-entry-id="{{ $info->id }}">
-                                    <td> {{ ucfirst($info->doctor_speciality) }} </td>
-                                    <td> {{ $info->notes }} </td>
-                                    <!-- <td> {{ $info->nearby_doctor }}</td>  -->
-                                    <td> {{ ($info['appointment_request']) ? $info['appointment_request']->seen : 'No'}}</td> 
+                                    <td> {{ ucfirst($info['users']->name) }} </td>
+                                    <td> {{ ucfirst($info->notes) }} </td>
+                                    <td> {{ $info['users']->email }}</td> 
                                     <td>
                                         <span style="display:none;">                                            
                                             {{ \Carbon\Carbon::parse($info->created_at)->format('Y/m/d')}}
@@ -42,7 +41,7 @@
                                     </td>
                                      <td>
                                         <!--<a href="{{ route('admin.medical_history.show',[$info->id]) }}" class="btn btn-xs btn-primary" title="View"><i class="mdi mdi-magnify"></i>View</a>-->
-                                        <a href="{{ route('admin.appointment_setting.show',[$info->id]) }}" class="btn btn-xs btn-primary" title="View"><i class="mdi mdi-magnify"></i>View</a>
+                                        <a href="{{ route('admin.docappoint_setting.show',[$info->id]) }}" class="btn btn-xs btn-primary" title="View"><i class="mdi mdi-magnify"></i>View</a>
                                         <!-- <a href="{{ route('admin.medical_history.edit',[$info->id]) }}" class="btn btn-xs btn-info" title="Edit">Edit<i class="mdi mdi-pencil"></i></a>
                                         {!! Form::open(array(
                                         'style' => 'display: inline-block;',

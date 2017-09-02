@@ -57,6 +57,15 @@
                                             </div>
                                         </div>
                                     
+                                    <div>
+                                        <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                                    </div>
+                                    
+                                    <div>
+                                        <input type="hidden" name="request_to" id="request_to" value="">
+                                    </div>
+                                    
+
                                     <div class="row smpad"> 
                                     <button type="submit" class="medicineBtn btn btn-info btn-fill pull-right">Submit</button>
                                     </div>

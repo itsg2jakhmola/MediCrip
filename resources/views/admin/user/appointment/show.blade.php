@@ -31,7 +31,25 @@
                         
                         <tr>
                             <th>Doctor Recommended Prescription</th>
-                            <td>{{ ($appointment_detail['prescriptions']) ? $appointment_detail['prescriptions']->prescription : 'Pending'}}</td>
+                            <td>{{ ($appointment_detail['appointment_request']->seen) ? $appointment_detail['appointment_request']->seen : 'Pending'}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Doctor Name</th>
+                            <td>{{ $appointment_detail['users']->name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Doctor Email</th>
+                            <td>
+                            <a href="mailto:{{$appointment_detail['users']->email}}">{{$appointment_detail['users']->email}}</a>
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <th>Doctor Phone</th>
+                            <td>{{ $appointment_detail['users']->phone_number }}</td>
                         </tr>
                         
                     </table>

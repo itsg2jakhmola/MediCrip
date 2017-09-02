@@ -9,7 +9,7 @@ class DoctorPrescription extends Model
     protected $table = 'prescriptions';
 
      protected $fillable = [
-        'to_patient', 'from_doctor', 'created_at', 'updated_at'
+        'to_pharmist', 'distance', 'lat', 'lng', 'for_patient', 'from_doctor', 'created_at', 'updated_at'
     ];
 
     public function users($local_key = 'user_id'){

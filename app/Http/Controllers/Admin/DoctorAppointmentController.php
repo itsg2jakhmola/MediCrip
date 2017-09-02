@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 use App\AppointmentRequest;
 use App\DoctorPrescription;
 use App\Http\Requests;
@@ -44,9 +45,23 @@ class DoctorAppointmentController extends Controller
      */
     public function store(Request $request)
     {
+
         $auth = Auth::user();
+        $latitude = $auth->lat;
+        $longitude = $auth->lng;
+        
+        $nearBy = DB::select(
+               "SELECT *,  ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( lat ) ) ) ) AS distance FROM users where user_type = 3 ORDER BY distance LIMIT 0 , 1
+            ");
+
+
         $doctorPrescription = new DoctorPrescription;
-        $doctorPrescription->to_patient = $request['to_patient'];
+        $doctorPrescription->for_patient = $request['to_patient'];
+        $doctorPrescription->to_pharmist = $nearBy[0]->id;
+        $doctorPrescription->lat = $nearBy[0]->lat;
+        $doctorPrescription->lng = $nearBy[0]->lng;
+        $doctorPrescription->distance = $nearBy[0]->distance;
+        $doctorPrescription->appointment_id = $request['appoint_id'];
         $doctorPrescription->from_doctor = $auth->id;
         $doctorPrescription->prescription = $request['prescription'];
         $doctorPrescription->save();
@@ -63,10 +78,11 @@ class DoctorAppointmentController extends Controller
     public function show($id)
     {
         $appointment_seen = AppointmentRequest::find($id);
-        $appointment_seen->seen = 'Yes';
+        $appointment_seen->seen = 'Seen';
         $appointment_seen->save();
 
         $appointment_detail = AppointmentRequest::where('id', $id)->first()->load('users');
+
         return view('admin.user.doctor_appointment.show', compact('appointment_detail'));
     }
 

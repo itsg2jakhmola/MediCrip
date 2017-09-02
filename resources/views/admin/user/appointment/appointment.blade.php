@@ -9,6 +9,8 @@
                         <div class="card">
                             <div class="header">
 
+                                @include('includes.flash')
+
                                 <a href="{{route('admin.appointment_setting.create')}}" class="btn btn-info btn-fill pull-right">Add Appointment</a>
 
                                 <h4 class="title">Appointment History</h4>
@@ -19,7 +21,7 @@
                                     <thead>
                                         <th>Doctor Speciality</th>
                                         <th>Notes</th>
-                                        <!-- <th>Nearby_doctor</th> -->
+                                        <th>Nearby_doctor</th>
                                         <th>Seen By Doctor</th>
                                         <th>Appointment Date/Time</th>
                                         
@@ -32,7 +34,7 @@
                                  <tr data-entry-id="{{ $info->id }}">
                                     <td> {{ ucfirst($info->doctor_speciality) }} </td>
                                     <td> {{ $info->notes }} </td>
-                                    <!-- <td> {{ $info->nearby_doctor }}</td>  -->
+                                    <td> {{ $info['appointment_request']->assigned_name }}</td> 
                                     <td> {{ ($info['appointment_request']) ? $info['appointment_request']->seen : 'No'}}</td> 
                                     <td>
                                         <span style="display:none;">                                            

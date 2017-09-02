@@ -7,6 +7,7 @@ use DB;
 use Auth;
 use App\User;
 use App\Appointment;
+use App\Notification;
 use App\AppointmentRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -20,7 +21,10 @@ class MyAppointmentController extends Controller
      */
     public function index()
     {
-        $appointment_list = Appointment::with('appointment_request')->get();
+        $user = Auth::user();
+
+        $appointment_list = Appointment::with('appointment_request')
+                            ->where('user_id', $user->id)->get();
         //dd($appointment_list);
         
         return view('admin.user.appointment.appointment', compact('appointment_list'));
@@ -46,6 +50,7 @@ class MyAppointmentController extends Controller
      */
     public function store(Request $request)
     {
+
         $user = Auth::user();
         $latitude = $user->lat;
         $longitude = $user->lng;
@@ -53,6 +58,8 @@ class MyAppointmentController extends Controller
         $nearBy = DB::select(
                "SELECT *,  ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( lat ) ) ) ) AS distance FROM users where user_type = 2 ORDER BY distance LIMIT 0 , 1
             ");
+
+        $request['request_to'] = $nearBy[0]->id;
 
         $fixappointment = Appointment::create($request->all());
         if($fixappointment){
@@ -68,7 +75,23 @@ class MyAppointmentController extends Controller
             $appointment->notes = $fixappointment->notes;
             $appointment->save();
         }
-        return redirect()->route('admin.appointment_setting.index');
+
+        // add notification
+        Notification::create(array(
+            'receiver_id' => $nearBy[0]->id,
+            'receiver_type' => 'doctor',
+            'sender_id' => $user->id,
+            'sender_type' => 'patient',
+            'object' => 'appointment',
+            'verb' => 'request',
+            'message' => "Hi {{name}}, your appointment request",
+            'metadata' => json_encode(array(
+                'type' => 'patient_appointment',
+                'user_id' => $user->id,
+                'name' => $user->name
+            )),
+        ));
+        return redirect()->route('admin.appointment_setting.index')->with('status', 'Your booking request has been sent to the ' . $nearBy[0]->name);
     }
 
     /**
@@ -79,7 +102,8 @@ class MyAppointmentController extends Controller
      */
     public function show($id)
     {
-        $appointment_detail = Appointment::with('prescriptions')->where('id', $id)->first();
+        $appointment_detail = Appointment::with('appointment_request', 'prescriptions', 'users')->where('id', $id)->first();
+        
         return view('admin.user.appointment.show', compact('appointment_detail'));
     }
 

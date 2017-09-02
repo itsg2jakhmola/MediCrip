@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="{{asset('admin/assets/img/favicon.ico')}}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
+    <meta name="csrf_token" content="{{ csrf_token() }}" />
 	<title>MedCrip</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
@@ -188,8 +188,8 @@
                                 </div>
                             </div> -->
 
-
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <div class="deshboard-links nlist">
+                              <a href="javascript:void(0)" class="dropdown-toggle ncount" data-ncount="{{Auth::user()->notification_count}}" data-toggle="dropdown">
                                     <i class="fa fa-globe"></i>
                                     <b class="caret hidden-sm hidden-xs"></b>
                                     <span class="notification hidden-sm hidden-xs">5</span>
@@ -198,13 +198,18 @@
 										<b class="caret"></b>
 									</p>
                               </a>
-                              <ul class="dropdown-menu">
+                              <div class="">
+                                <ul class="nscroll" data-total="" data-nextPage="" style="overflow-y:scroll; max-height: 330px; cursor:pointer">
+                                </ul>
+                            </div>
+                            </div>
+                              <!-- <ul class="dropdown-menu">
                                 <li><a href="#">Notification 1</a></li>
                                 <li><a href="#">Notification 2</a></li>
                                 <li><a href="#">Notification 3</a></li>
                                 <li><a href="#">Notification 4</a></li>
                                 <li><a href="#">Another notification</a></li>
-                              </ul>
+                              </ul> -->
                         </li>
                         <li>
                            <a href="">
@@ -318,6 +323,8 @@
     <!--   Core JS Files   -->
     <script src="{{asset('admin/assets/js/jquery-1.10.2.js')}}" type="text/javascript"></script>
 	<script src="{{asset('admin/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
+
+    <script src="{{asset('js/notify.js')}}" type="text/javascript""></script>
 
 	<!--  Checkbox, Radio & Switch Plugins -->
 	<script src="{{asset('admin/assets/js/bootstrap-checkbox-radio-switch.js')}}"></script>

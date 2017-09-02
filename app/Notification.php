@@ -56,7 +56,7 @@ class Notification extends Model
     /**
 	 * Get the foodie that belongs notification.
 	 */
-	public function foodie($local_key = 'receiver_id')
+	public function patient($local_key = 'receiver_id')
     {
         return $this->belongsTo('App\User', $local_key, 'id');
     }
@@ -64,7 +64,7 @@ class Notification extends Model
     /**
 	 * Get the chef that belongs notification.
 	 */
-	public function chef($local_key = 'sender_id')
+	public function doctor($local_key = 'sender_id')
     {
         return $this->belongsTo('App\User', $local_key, 'id');
     }

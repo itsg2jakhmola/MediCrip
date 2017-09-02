@@ -25,16 +25,16 @@ class NotificationController extends Controller
 		// add notification
 		Notification::create(array(
 			'receiver_id' => $user->id,
-			'receiver_type' => 'foodie',
+			'receiver_type' => 'doctor',
 			'sender_id' => '0',
-			'sender_type' => 'system',
+			'sender_type' => 'pharmist',
 			'object' => 'profile',
 			'verb' => 'complete',
 			'message' => "Hi {{name}}, Complete your profile. Be credible.",
 			'metadata' => json_encode(array(
 				'type' => 'profile_complete',
-				'user_id' => $user->id,
-				'name' => $user->first_name
+				'id' => $user->id,
+				'name' => $user->name
 			)),
 		));
 
@@ -160,12 +160,12 @@ class NotificationController extends Controller
 
         foreach($notifications as $key => $val)
         {
-			$sender = (($val->sender_type !== 'system') ? (($val->sender_type == 'foodie') ? $val->foodie('sender_id')->first() : $val->chef('sender_id')->first()) : 'FeastBy');
+			$sender = (($val->sender_type !== 'pharmist') ? (($val->sender_type == 'patient') ? $val->patient('sender_id')->first() : $val->doctor('sender_id')->first()) : 'MedCrip');
 			$message = $val->message;
 			$metadata = json_decode($val->metadata, true);
 
 			// prepare pattern search
-			$pattern['{{sender}}'] =  '<strong>' . (($val->sender_type !== 'system') ? (($val->sender_type == 'foodie') ? $sender->first_name : $sender->first_name) : $sender) . '</strong>';
+			$pattern['{{sender}}'] =  '<strong>' . (($val->sender_type !== 'pharmist') ? (($val->sender_type == 'patient') ? $sender->name : $sender->name) : $sender) . '</strong>';
 
             // prepare notification message
 			$msg = strtr($message, $pattern);
@@ -249,11 +249,11 @@ class NotificationController extends Controller
 	{
 		$data = [];
 		$input = $request->all();
-		$input['user_id'] = Auth::user()->id;
+		$input['id'] = Auth::user()->id;
 
 		// find unread notification count
 		//$unread = Notification::where(function($query) use ($input) {
-		//	$query->where('receiver_id', $input['user_id']);
+		//	$query->where('receiver_id', $input['id']);
 		//	$query->where('is_read', 0);
 		//	})
 		//	->count();
@@ -263,7 +263,7 @@ class NotificationController extends Controller
 		$page = $request->input('page', 1);
 		$per_page = $request->input('per_page', 5);
 		$notifications = Notification::where(function($query) use ($input) {
-			$query->where('receiver_id', $input['user_id']);
+			$query->where('receiver_id', $input['id']);
 			})
 			->orderBy('id', 'desc')
 			->paginate($per_page);
@@ -279,12 +279,12 @@ class NotificationController extends Controller
 			$notification = clone $val;
 
 
-			$sender = (($val->sender_type !== 'system') ? (($val->sender_type == 'foodie') ? $val->foodie('sender_id')->first() : $val->chef('sender_id')->first()) : config('app.name'));
+			$sender = (($val->sender_type !== 'pharmist') ? (($val->sender_type == 'patient') ? $val->patient('sender_id')->first() : $val->doctor('sender_id')->first()) : config('app.name'));
 			$message = $val->message;
 			$metadata = json_decode($val->metadata, true);
-
+			print_r($sender);die;
 			// prepare pattern search for sendor
-			$pattern['{{sender}}'] =  (($val->sender_type !== 'system') ? (($val->sender_type == 'foodie') ? $sender->first_name : $sender->first_name) : $sender);
+			$pattern['{{sender}}'] =  (($val->sender_type !== 'pharmist') ? (($val->sender_type == 'patient') ? $sender->name : $sender->name) : $sender);
 
 			// prepare pattern search for metadata
 			foreach($metadata as $key => $meta) {
@@ -316,10 +316,10 @@ class NotificationController extends Controller
 		$data = [];
 		$timestamp = date('Y-m-d H:i:s');
 		$input = $request->all();
-		$input['user_id'] = Auth::user()->id;
+		$input['id'] = Auth::user()->id;
 
 		// Find user
-		$user = User::find($input['user_id']);
+		$user = User::find($input['id']);
 
 		if(! $user) {
 			return response()->json([
@@ -352,12 +352,12 @@ class NotificationController extends Controller
 		$data = [];
 		$timestamp = date('Y-m-d H:i:s');
 		$input = $request->all();
-		$input['user_id'] = Auth::user()->id;
+		$input['id'] = Auth::user()->id;
 
 		// Find notification
 		$notification = Notification::where(function($query) use ($input) {
 				$query->where('id', $input['nid']);
-				$query->where('receiver_id', $input['user_id']);
+				$query->where('receiver_id', $input['id']);
 			})
 			->first();
 
@@ -421,9 +421,9 @@ class NotificationController extends Controller
 				$data['content'] = $content;
 			}
 			break;
-			case 'profile_complete':
+			case 'appointment_request':
 			{
-				$url = url('foodie/myprofile');
+				$url = url('patient/myprofile');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -431,7 +431,7 @@ class NotificationController extends Controller
 			break;
 			case 'request_approved':
 			{
-				$url = url('foodie/orders');
+				$url = url('patient/orders');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -447,10 +447,10 @@ class NotificationController extends Controller
 			break;
 			case 'inbox_message':
 			{
-				if($n->receiver_type == 'foodie'){
-					$url = url('foodie/inbox');
-				}else if($n->receiver_type == 'chef'){
-					$url = url('chef/inbox');
+				if($n->receiver_type == 'patient'){
+					$url = url('patient/inbox');
+				}else if($n->receiver_type == 'doctor'){
+					$url = url('doctor/inbox');
 				}
 
 				$data['callback'] = 'url';
@@ -458,13 +458,13 @@ class NotificationController extends Controller
 			}
       break;
 
-      // Chef Notifications
+      // doctor Notifications
       case 'booking_request':
 			{
-				if($n->receiver_type == 'foodie'){
-					$url = '';//url('foodie/foodie-requests');
-				}else if($n->receiver_type == 'chef'){
-					$url = url('chef/foodie-requests');
+				if($n->receiver_type == 'patient'){
+					$url = '';//url('patient/patient-requests');
+				}else if($n->receiver_type == 'doctor'){
+					$url = url('doctor/patient-requests');
 				}
 
 				$data['callback'] = 'url';
@@ -474,10 +474,10 @@ class NotificationController extends Controller
 
 	  case 'payment_success':
 			{
-				if($n->receiver_type == 'foodie'){
+				if($n->receiver_type == 'patient'){
 					$url = '';
-				}else if($n->receiver_type == 'chef'){
-					$url = url('chef/orders');	
+				}else if($n->receiver_type == 'doctor'){
+					$url = url('doctor/orders');	
 				}
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -485,7 +485,7 @@ class NotificationController extends Controller
 			break;
 	  case 'menu_change_approve' :
 		  	{
-		  		$url = url('chef/manage-feast/menu');
+		  		$url = url('doctor/manage-feast/menu');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -493,7 +493,7 @@ class NotificationController extends Controller
 	  		break;
 	  case 'menu_change_declined' :
 		  	{
-		  		$url = url('chef/manage-feast/menu');
+		  		$url = url('doctor/manage-feast/menu');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -501,7 +501,7 @@ class NotificationController extends Controller
 	  		break;
 	  case 'menu_item_change_approve' :
 		  	{
-		  		$url = url('chef/manage-feast/menu');
+		  		$url = url('doctor/manage-feast/menu');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -509,7 +509,7 @@ class NotificationController extends Controller
 	  		break;
 	  case 'menu_item_change_declined' :
 		  	{
-		  		$url = url('chef/manage-feast/menu');
+		  		$url = url('doctor/manage-feast/menu');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -518,7 +518,7 @@ class NotificationController extends Controller
 
 	  	case 'feast_info_approve' :
 		  	{
-		  		$url = url('chef/manage-feast/feasts');
+		  		$url = url('doctor/manage-feast/feasts');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -527,7 +527,7 @@ class NotificationController extends Controller
 
 	  	case 'feast_info_declined' :
 		  	{
-		  		$url = url('chef/manage-feast/feasts');
+		  		$url = url('doctor/manage-feast/feasts');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;

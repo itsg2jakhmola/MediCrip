@@ -2,8 +2,8 @@
 
 @section('content')
   <aside class="rights register">
-    
-      
+
+
       <div class="radio">
         <label>
           <input type="radio" onchange="swapConfig(this)" id="patient" checked="" name="user_type_check" value="1">
@@ -88,11 +88,11 @@
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>No</span>
         </label>
-        
+
       </div>
-    
+
         <input type="text" id="medicalSetting" name="medical_number" class="form-control" placeholder="Medical Number">
-    
+
       </div>
       <div class="form-group">
         <input type="text" name="address" id="address" class="form-control" placeholder="Address">
@@ -126,7 +126,7 @@
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>No</span>
         </label>
-        
+
       </div>
 
         <input type="text" id="insuranceSetting" name="insurance_company" class="form-control" placeholder="Insurance Company">
@@ -147,7 +147,7 @@
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>No</span>
         </label>
-        
+
       </div>
         <input type="text" id="insuranceNumberSetting" name="insurance_number" class="form-control" placeholder="Insurance Number">
       </div>
@@ -157,12 +157,12 @@
 
      <div class="form-group geo-details">
         <input placeholder="Input Longitude .." id="longitude" class="form-control" name="lng" type="hidden" value="">
-     </div> 
+     </div>
      <div class="form-group patientSettings">
         <button class="btn btn-info col-md-12">Register</button>
       </div>
     </div>
-        
+
     </form>
 
     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register/doctor') }}">
@@ -230,7 +230,7 @@
 
      <div class="form-group geo-details">
         <input placeholder="Input Longitude .." id="doctor_longitude" class="form-control" name="lng" type="hidden" value="">
-     </div> 
+     </div>
      <div class="form-group patientSettings">
         <button class="btn btn-info col-md-12">Register</button>
       </div>
@@ -300,7 +300,7 @@
 
      <div class="form-group geo-details">
         <input placeholder="Input Longitude .." id="pharmacy_longitude" class="form-control" name="lng" type="hidden" value="">
-     </div> 
+     </div>
     <div class="form-group">
         <button class="btn btn-info col-md-12">Register</button>
       </div>
@@ -388,31 +388,32 @@
 </div> --}}
 @endsection
 
- <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
-    <script src="http://dev.demosparx.in/CSS5772/public/admin/plugins/location-tracker/jquery.geocomplete.min.js"></script>
-    <script>
-        jQuery(document).ready(function($) {
-          alert("s");
-            $("#location1").geocomplete({
-              details: ".geo-details",
-              detailsAttribute: "data-geo",
-            });   
+@section('page.bottom-script')
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC-80FS0o99BCAXM7Do4MvSVE_ea8O9pXo&sensor=false&amp;libraries=places"></script>
+     <script src="http://dev.demosparx.in/CSS5772/public/admin/plugins/location-tracker/jquery.geocomplete.min.js"></script>
+     <script>
+         jQuery(document).ready(function($) {
+             $("#location1").geocomplete({
+               details: ".geo-details",
+               detailsAttribute: "data-geo",
+             });
 
 
-              $("#location1")
-                .geocomplete()
-                .bind("geocode:result", function (event, result) {            
-                  $("#latitude").val(result.geometry.location.lat());
-                  $("#longitude").val(result.geometry.location.lng());
-                  /*console.log(result);*/
-              });
-            
-            jQuery('#dob').datepicker({
-                format: "dd-mm-yyyy",
-                autoclose: true,
-                todayHighlight: true
-            }); 
-            
+               $("#location1")
+                 .geocomplete()
+                 .bind("geocode:result", function (event, result) {
+                   $("#latitude").val(result.geometry.location.lat());
+                   $("#longitude").val(result.geometry.location.lng());
+                   /*console.log(result);*/
+               });
 
-        });              
-    </script>
+             jQuery('#dob').datepicker({
+                 format: "dd-mm-yyyy",
+                 autoclose: true,
+                 todayHighlight: true
+             });
+
+
+         });
+     </script>
+@endsection

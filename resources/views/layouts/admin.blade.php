@@ -4,8 +4,14 @@
 	<meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="{{asset('admin/assets/img/favicon.ico')}}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="csrf_token" content="{{ csrf_token() }}" />
+    <meta name="_token" content="{{ csrf_token() }}" />
 	<title>MedCrip</title>
+	<script type="text/javascript">
+		window.Laravel = {
+			csrfToken : '{!! csrf_token() !!}',
+			basePath : '{!! url('/') !!}'
+		}
+	</script>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -37,7 +43,6 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="{{asset('admin/assets/css/pe-icon-7-stroke.css')}}" rel="stylesheet" />
-
 </head>
 <body>
 
@@ -64,7 +69,7 @@
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
-                </li> 
+                </li>
                 <li {{ (current_page('user')) ? 'class=active' : ''}}>
                     <a href="{{url('/admin/user')}}">
                         <i class="pe-7s-user"></i>
@@ -137,7 +142,7 @@
 
                 @if(auth()->user()->user_type == 1)
                 <li {{ (current_page('review')) ? 'class=active' : ''}}>
-                    
+
                     <a href="{{url('/admin/review')}}">
                         <i class="pe-7s-map-marker"></i>
                         <p>Review</p>
@@ -150,7 +155,7 @@
                         <p>Notifications</p>
                     </a>
                 </li> -->
-				
+
             </ul>
     	</div>
     </div>
@@ -324,7 +329,7 @@
     <script src="{{asset('admin/assets/js/jquery-1.10.2.js')}}" type="text/javascript"></script>
 	<script src="{{asset('admin/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
 
-    <script src="{{asset('js/notify.js')}}" type="text/javascript""></script>
+    <script src="{{asset('js/notify.js')}}" type="text/javascript"></script>
 
 	<!--  Checkbox, Radio & Switch Plugins -->
 	<script src="{{asset('admin/assets/js/bootstrap-checkbox-radio-switch.js')}}"></script>
@@ -336,7 +341,7 @@
     <script src="{{asset('admin/assets/js/bootstrap-notify.js')}}"></script>
 
     <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    {{-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> --}}
 
     <!--  Data Table JS Plugin    -->
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
@@ -344,7 +349,7 @@
 
     <script src="https://cdn.datatables.net/buttons/1.4.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.flash.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
@@ -354,7 +359,7 @@
     <script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.html5.min.js"></script>
 
     <script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.print.min.js"></script>
-    
+
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="{{asset('admin/assets/js/light-bootstrap-dashboard.js')}}"></script>
@@ -371,14 +376,14 @@
 
         	demo.initChartist();
 
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "Welcome to <b>MedCrip</b> - a beautiful freebie for every web developer."
-
-            },{
-                type: 'info',
-                timer: 4000
-            });
+        	// $.notify({
+          //   	icon: 'pe-7s-gift',
+          //   	message: "Welcome to <b>MedCrip</b> - a beautiful freebie for every web developer."
+					//
+          //   },{
+          //       type: 'info',
+          //       timer: 4000
+          //   });
 
     	});
 	</script>

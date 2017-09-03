@@ -1,4 +1,4 @@
- var base_url = 'http://localhost:8000';
+ var base_url = Laravel.basePath;
 	// CSRF protection
 $.ajaxSetup({
 	headers : {
@@ -8,7 +8,7 @@ $.ajaxSetup({
 
 // Handle notification bell
 $(".nlist").on('click', function(e) {
-	
+
 	e.stopPropagation();
 	var $ncount = $('a.ncount');
 
@@ -77,6 +77,7 @@ $('ul.nscroll').scroll(function(e) {
 $('ul.nscroll').on('click', 'li', function(e) {
 	var $this = $(this), nid = $this.data('nid');
 	$.post(base_url + '/api/user/readnotification', {
+    _token: Laravel.csrfToken,
 		nid : nid
 	}, function(response) {
 		if (response.code == 0) {

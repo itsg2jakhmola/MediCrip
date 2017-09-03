@@ -16,19 +16,17 @@ class UserController extends Controller
     {
     	$user = Auth::user();
         $userId = intval($user->id);
-        
+
     	$userType = Usertype::find($userId);
     	//$userType = Usertype::where('id', '=', $user->id)->first();
-        
+
     	return view('admin.user.index', compact('user', 'userType'));
-    	                  
+
     }
 
     public function update(Request $request, $id)
 
     {
-
-    	print_r($request->all());die;
 
         $this->validate($request, [
 
@@ -38,7 +36,7 @@ class UserController extends Controller
 
         ]);
 
-        
+
 
         User::find($id)->update($request->all());
 

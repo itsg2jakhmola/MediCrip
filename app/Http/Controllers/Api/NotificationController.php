@@ -282,7 +282,6 @@ class NotificationController extends Controller
 			$sender = (($val->sender_type !== 'pharmist') ? (($val->sender_type == 'patient') ? $val->patient('sender_id')->first() : $val->doctor('sender_id')->first()) : config('app.name'));
 			$message = $val->message;
 			$metadata = json_decode($val->metadata, true);
-			print_r($sender);die;
 			// prepare pattern search for sendor
 			$pattern['{{sender}}'] =  (($val->sender_type !== 'pharmist') ? (($val->sender_type == 'patient') ? $sender->name : $sender->name) : $sender);
 
@@ -477,7 +476,7 @@ class NotificationController extends Controller
 				if($n->receiver_type == 'patient'){
 					$url = '';
 				}else if($n->receiver_type == 'doctor'){
-					$url = url('doctor/orders');	
+					$url = url('doctor/orders');
 				}
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -514,7 +513,7 @@ class NotificationController extends Controller
 				$data['callback'] = 'url';
 				$data['url'] = $url;
 		  	}
-	  		break;	
+	  		break;
 
 	  	case 'feast_info_approve' :
 		  	{
@@ -523,7 +522,7 @@ class NotificationController extends Controller
 				$data['callback'] = 'url';
 				$data['url'] = $url;
 		  	}
-	  		break;	
+	  		break;
 
 	  	case 'feast_info_declined' :
 		  	{
@@ -532,7 +531,7 @@ class NotificationController extends Controller
 				$data['callback'] = 'url';
 				$data['url'] = $url;
 		  	}
-	  		break;	
+	  		break;
 			default:
 			{
 				$data['callback'] = 'url';

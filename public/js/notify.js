@@ -14,7 +14,9 @@ $(".nlist").on('click', function(e) {
 
 	if ($ncount.data('ncount') > 0)
 	{
-		$.post(base_url + '/api/user/shownotifications', function(response)
+		$.post(base_url + '/api/user/shownotifications', {
+      _token: Laravel.csrfToken,
+    }, function(response)
 		{
 			if (response.code == 0)
 			{

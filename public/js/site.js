@@ -49,3 +49,6 @@ function swapConfig(x) {
 	    todayHighlight: true
 	}); 
 
+
+    $( "#appointment_date_edit" ).datepicker();
+  

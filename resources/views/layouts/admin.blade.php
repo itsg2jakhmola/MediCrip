@@ -325,6 +325,7 @@
 
 </body>
 
+
     <!--   Core JS Files   -->
     <script src="{{asset('admin/assets/js/jquery-1.10.2.js')}}" type="text/javascript"></script>
 	<script src="{{asset('admin/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
@@ -370,6 +371,7 @@
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="{{asset('admin/assets/js/demo.js')}}"></script>
+
 
 	<script type="text/javascript">
     	$(document).ready(function(){

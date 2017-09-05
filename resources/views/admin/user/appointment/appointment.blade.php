@@ -45,14 +45,20 @@
                                      <td>
                                         <!--<a href="{{ route('admin.medical_history.show',[$info->id]) }}" class="btn btn-xs btn-primary" title="View"><i class="mdi mdi-magnify"></i>View</a>-->
                                         <a href="{{ route('admin.appointment_setting.show',[$info->id]) }}" class="btn btn-xs btn-primary" title="View"><i class="mdi mdi-magnify"></i>View</a>
-                                        <!-- <a href="{{ route('admin.medical_history.edit',[$info->id]) }}" class="btn btn-xs btn-info" title="Edit">Edit<i class="mdi mdi-pencil"></i></a>
+                                        
+                                        @if($info['appointment_request']['seen'] == 'Pending')
+
+                                        <a href="{{ route('admin.appointment_setting.edit',[$info->id]) }}" class="btn btn-xs btn-info" title="Edit">Edit<i class="mdi mdi-pencil"></i></a>
                                         {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("Are you Sure ?")."');",
-                                        'route' => ['admin.medical_history.destroy', $info->id])) !!}
+                                        'route' => ['admin.appointment_setting.destroy', $info->id])) !!}
                                         <button type="submit" class="btn btn-xs btn-danger" title="Delete"><i class="mdi mdi-delete">Delete</i></button>
-                                        {!! Form::close() !!}    -->                                     
+
+                                        @endif
+
+                                        {!! Form::close() !!}                                        
                                     </td>
                                 </tr>
                             @endforeach

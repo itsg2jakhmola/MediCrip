@@ -10,10 +10,12 @@ use App\Appointment;
 use App\Notification;
 use App\AppointmentRequest;
 use App\Http\Requests;
+use App\Http\Controllers\Traits\EmailTrait;
 use App\Http\Controllers\Controller;
 
 class MyAppointmentController extends Controller
 {
+    use EmailTrait;
     /**
      * Display a listing of the resource.
      *
@@ -86,11 +88,17 @@ class MyAppointmentController extends Controller
             'verb' => 'request',
             'message' => "Hi {{name}}, your appointment request",
             'metadata' => json_encode(array(
-                'type' => 'patient_appointment',
+                'type' => 'appointment_request',
                 'user_id' => $user->id,
                 'name' => $user->name
             )),
         ));
+
+        $full_name = $nearBy[0]->name;
+        $subject = "Appointment Request";
+
+        $this->sendEmail('auth.emails.appointment_request', ["full_name" => $full_name, "patient" => $user->name], $subject, $nearBy[0]->email, $this->_fromName);
+
         return redirect()->route('admin.appointment_setting.index')->with('status', 'Your booking request has been sent to the ' . $nearBy[0]->name);
     }
 
@@ -115,7 +123,11 @@ class MyAppointmentController extends Controller
      */
     public function edit($id)
     {
-        //
+          $appointmentRequest = Appointment::find($id);
+          $users = user::where('user_type', '2')->get();
+        
+            return \View::make('admin.user.appointment.edit')
+            ->with(compact('appointmentRequest', 'users'));
     }
 
     /**
@@ -127,7 +139,18 @@ class MyAppointmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+         $this->validate($request, [
+                'notes'     => 'required',
+                'medical_scan_dt'  => 'required',
+            ]);
+
+        $appointment = Appointment::find($id);
+        $appointment->notes = $request['notes'];
+        $appointment->appointment_time = $request['medical_scan_dt'];
+        $appointment->save();
+
+         return redirect()->route('admin.appointment_setting.index')->with("status", "Well done!! Appointment detail updated successfully");
     }
 
     /**
@@ -138,6 +161,9 @@ class MyAppointmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $appointment = Appointment::findOrFail($id);
+         $appointment->delete();
+
+           return redirect()->back()->with("status", "Appointment successfully deleted");
     }
 }

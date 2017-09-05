@@ -15,6 +15,13 @@ Route::get('/', function () {
     return view('homepage');
 });
 
+/*Route::get('test', function(){
+    $mail = Mail::send('auth.emails.test', ['user' => "Sachin"], function ($message) {
+            $message->from('notification@feastby.com', 'Feastby');
+            $message->to("sachintendulkar3@yopmail.com", "sachin")->subject('MedCrip | Request Email test');
+        });
+});*/
+
 // Display all SQL executed in Eloquent
 /*Event::listen('illuminate.query', function($query)
 {
@@ -29,7 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
     Route::get('/prescription', 'Admin\PrescriptionController@index');
     Route::resource('medical_history', 'Admin\MedicalHistoryController');
     Route::resource('appointment_setting', 'Admin\MyAppointmentController');
-    Route::resource('docappoint_setting', 'Admin\doctorAppointmentController');
+    Route::resource('docappoint_setting', 'Admin\DoctorAppointmentController');
     Route::get('/review', 'Admin\ReviewController@index');
     Route::get('/cancelation_list', 'Admin\CancelationListController@index');
     Route::get('/add_prscriptions', 'Admin\AddPrescriptionController@index');

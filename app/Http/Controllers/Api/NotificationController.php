@@ -422,7 +422,7 @@ class NotificationController extends Controller
 			break;
 			case 'appointment_request':
 			{
-				$url = url('patient/myprofile');
+				$url = url('admin/docappoint_setting');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;

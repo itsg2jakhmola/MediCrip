@@ -9,9 +9,11 @@ use App\AppointmentRequest;
 use App\DoctorPrescription;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EmailTrait;
 
 class DoctorAppointmentController extends Controller
 {
+    use EmailTrait;
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +47,6 @@ class DoctorAppointmentController extends Controller
      */
     public function store(Request $request)
     {
-
         $auth = Auth::user();
         $latitude = $auth->lat;
         $longitude = $auth->lng;
@@ -65,6 +66,12 @@ class DoctorAppointmentController extends Controller
         $doctorPrescription->from_doctor = $auth->id;
         $doctorPrescription->prescription = $request['prescription'];
         $doctorPrescription->save();
+
+        $full_name = $request['patient_name'];
+        $subject = "Doctor has written the prescriptions";
+
+        $this->sendEmail('auth.emails.doctor_prescription', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $request['patient_email'], $this->_fromName);
+
 
         return redirect()->route('admin.docappoint_setting.index')->with('status', 'Prescription send successfully');
     }

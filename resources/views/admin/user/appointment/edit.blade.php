@@ -26,18 +26,28 @@
     <div class="panel-body">
 
 
-     {!! Form::model( $medicalhistory, ['route' => ['admin.medical_history.update', $medicalhistory->id], 'method' => 'PATCH', 'files'=>true]) !!}
+     {!! Form::model( $appointmentRequest, ['route' => ['admin.appointment_setting.update', $appointmentRequest->id], 'method' => 'PATCH', 'files'=>true]) !!}
 
         <div class="row">
             <div class="col-xs-12 form-group">
 
-                {!! Form::label('name', 'Name*', ['class'=>'control-label']) !!}
+                 <!-- <select class="form-control" name="doctor_speciality">
+                    <option value="">-- Select Speciality --</option>
+                    @foreach ($users as $user)
+                      @if($user->user_type == '2')
+                      <option value='{{$user->doctor_practice}}'> {{$user->doctor_practice}} </option>
+                      @endif
+                    @endforeach
+                  </select>
+             <p class="help-block error">
+                {!! $errors->has('doctor_speciality') ? $errors->first('doctor_speciality') : '' !!}
+            </p> -->
 
-                {!! Form::text('name', $medicalhistory->name, ['placeholder'=>'Input name ..', 'id'=>'name', 'class'=>'form-control']) !!}
+            {!! Form::label('speciality', 'Doctor Speciality*', ['class'=>'control-label']) !!}
 
-                <p class="help-block error">
-                    {!! $errors->has('name') ? $errors->first('name') : '' !!}
-                </p>
+                {!! Form::text('doctor_speciality', $appointmentRequest->doctor_speciality, ['placeholder'=>'Input Notes/Description Here ..', 'id'=>'doctor_speciality', 'class'=>'form-control', 'readonly']) !!}
+
+                
             </div>
         </div>
 
@@ -46,35 +56,21 @@
 
                 {!! Form::label('description', 'Description*', ['class'=>'control-label']) !!}
 
-                {!! Form::text('description', $medicalhistory->description, ['placeholder'=>'Input last name ..', 'id'=>'description', 'class'=>'form-control']) !!}
+                {!! Form::text('notes', $appointmentRequest->notes, ['placeholder'=>'Input Notes/Description Here ..', 'id'=>'notes', 'class'=>'form-control']) !!}
                 <p class="help-block error">
-                    {!! $errors->has('description') ? $errors->first('description') : '' !!}
+                    {!! $errors->has('notes') ? $errors->first('notes') : '' !!}
                 </p>
             </div>
         </div>
 
-         <div class="row">
-            <div class="col-xs-12 form-group">
-
-                {!! Form::label('medical_scan', 'Medical Scan *', ['class'=>'control-label']) !!}
-
-                {!! Form::file('medical_scan', ['class'=>'filestyle', 'data-input' => 'false']) !!}
-                <!-- <p class="help-block" style="color:#0b6ad3">(Recommended size is: 45 x 45)</p> -->
-                <p class="help-block error">
-                    {!! $errors->has('medical_scan') ? $errors->first('medical_scan') : '' !!}
-                </p>
-                @if($medicalhistory->medical_scan != '' && $medicalhistory->medical_scan != null)
-                <img width="200" height="200" src="{{url('images/medicalhistory/' . $medicalhistory->medical_scan)}}" alt="Icon Image"/>
-                @endif
-            </div>
-        </div>
+        
 
         <div class="row">
             <div class="col-xs-12 form-group">
 
-                {!! Form::label('medical_scan_dt', 'Medical Scan Date *', ['class'=>'control-label']) !!}
+                {!! Form::label('medical_scan_dt', 'Appointment Date *', ['class'=>'control-label']) !!}
 
-                {!! Form::text('medical_scan_dt', $medicalhistory->medical_scan_dt, ['placeholder'=>'Input medical_scan_dt address ..', 'id'=>'medical_scan_dt', 'class'=>'form-control']) !!}
+                {!! Form::text('medical_scan_dt', $appointmentRequest->appointment_time, ['placeholder'=>'Input medical_scan_dt address ..', 'id'=>'appointment_date_edit', 'class'=>'form-control']) !!}
                 <p class="help-block error">
                     {!! $errors->has('medical_scan_dt') ? $errors->first('medical_scan_dt') : '' !!}
                 </p>
@@ -90,3 +86,10 @@
 </div>
 
 @endsection
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+  $( function() {
+    $( "#appointment_date_edit" ).datepicker();
+  } );
+</script>

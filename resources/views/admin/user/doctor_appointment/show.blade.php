@@ -37,6 +37,10 @@
                                 <td><textarea name="prescription" class="form-control" placeholder="Write Prescription for patient.."></textarea>
                                 <input type="hidden" value="{{$appointment_detail['users']->id}}" name="to_patient">
 
+                                <input type="hidden" value="{{$appointment_detail['users']->name}}" name="patient_name">
+
+                                <input type="hidden" value="{{$appointment_detail['users']->email}}" name="patient_email">
+
                                 <input type="hidden" value="{{$appointment_detail->appointment_id}}" name="appoint_id">
                                 <br>
                                 <button type="submit" class="btn btn-success">Submit</button>

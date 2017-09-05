@@ -6,6 +6,7 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\Http\Controllers\Traits\EmailTrait;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
@@ -22,6 +23,7 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use EmailTrait;
 
     /**
      * Where to redirect users after login / registration.
@@ -70,7 +72,7 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'user_type' => $data['user_type'],
@@ -85,6 +87,17 @@ class AuthController extends Controller
             'insurance_company' => ($data['insurance_company']) ? $data['insurance_company'] : '' ,
             'insurance_number' => ($data['insurance_number']) ? $data['insurance_number'] : '' ,
             'password' => bcrypt($data['password']),
+            
         ]);
+
+        // add event here
+        //event(new UserWasRegistered)
+
+        $subject = 'MedCrip Application login credentials';
+
+        $this->sendEmail('auth.emails.application_accepted', ["full_name" => $data['name'], "username" => $data['email'], "password" => $data['password']], $subject, $data['email'], $this->_fromName);
+
+        return $user;
+        
     }
 }

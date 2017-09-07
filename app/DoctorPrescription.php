@@ -15,4 +15,8 @@ class DoctorPrescription extends Model
     public function users($local_key = 'user_id'){
     	return $this->belongsTo('App\User', $local_key, 'id');
     }
+
+    public function doctor(){
+    	return $this->belongsTo(User::class, 'from_doctor', 'id');
+    }
 }

@@ -114,8 +114,8 @@
                 @endif
 
                 @if( auth()->user()->user_type == 1 || auth()->user()->user_type == 3)
-                <li {{ (current_page('prescription')) ? 'class=active' : ''}}>
-                    <a href="{{url('/admin/prescription')}}">
+                <li {{ (current_page('pharmist_setting')) ? 'class=active' : ''}}>
+                    <a href="{{url('/admin/pharmist_setting')}}">
                         <i class="pe-7s-news-paper"></i>
                         <p>Prescription List</p>
                     </a>

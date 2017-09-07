@@ -428,9 +428,9 @@ class NotificationController extends Controller
 				$data['url'] = $url;
 			}
 			break;
-			case 'request_approved':
+			case 'send_request':
 			{
-				$url = url('patient/orders');
+				$url = url('admin/pharmist_setting');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;

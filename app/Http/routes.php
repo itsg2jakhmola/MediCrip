@@ -33,10 +33,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
     Route::get('/welcome', 'Admin\DashboardController@index');
     Route::get('/user', 'Admin\UserController@index');
     //Route::get('/apppoinment', 'Admin\AppoinmentController@index');
-    Route::get('/prescription', 'Admin\PrescriptionController@index');
+    //Route::get('/prescription', 'Admin\PrescriptionController@index');
     Route::resource('medical_history', 'Admin\MedicalHistoryController');
     Route::resource('appointment_setting', 'Admin\MyAppointmentController');
     Route::resource('docappoint_setting', 'Admin\DoctorAppointmentController');
+    Route::resource('pharmist_setting', 'Admin\PharmacyController');
+    Route::post('update/format', ['uses' =>'Admin\DoctorAppointmentController@format', 'as' => 'admin.docappoint_setting.format']);
+    Route::get('patient/medical_history', ['uses' => 'Admin\PatientMedicalHistory@show', 'as' => 'admin.patient.history']);
     Route::get('/review', 'Admin\ReviewController@index');
     Route::get('/cancelation_list', 'Admin\CancelationListController@index');
     Route::get('/add_prscriptions', 'Admin\AddPrescriptionController@index');

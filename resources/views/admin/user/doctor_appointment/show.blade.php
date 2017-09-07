@@ -44,8 +44,28 @@
                                 <input type="hidden" value="{{$appointment_detail->appointment_id}}" name="appoint_id">
                                 <br>
                                 <button type="submit" class="btn btn-success">Submit</button>
-                                </td>
                                 </form>
+                                </td>
+                                <tr>
+                                
+                                <th>See Medical History</th>
+                                <td>
+                                {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'POST',
+                                        'route' => ['admin.docappoint_setting.format'])) !!}
+                                  
+                                    @if ($appointment_detail->seen == 'Seen')
+                                        <button type="submit" disabled class="btn btn-xs btn-danger" title="showHistory"><i class="mdi mdi-delete">Show medical History</i></button>
+                                    @else
+                                        <button type="submit" class="btn btn-xs btn-danger" title="Delete"><i class="mdi mdi-delete">Show medical History</i></button>
+                                    @endif  
+
+                                    
+                                     {!! Form::close() !!} 
+                                </td>
+                                </tr>
+                                
                         </tr>
                         
                     </table>

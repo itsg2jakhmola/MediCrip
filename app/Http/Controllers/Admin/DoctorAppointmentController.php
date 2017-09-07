@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use App\User;
+use App\Notification;
 use App\AppointmentRequest;
 use App\DoctorPrescription;
 use App\Http\Requests;
@@ -67,6 +69,29 @@ class DoctorAppointmentController extends Controller
         $doctorPrescription->prescription = $request['prescription'];
         $doctorPrescription->save();
 
+
+        // add notification
+        Notification::create(array(
+            'receiver_id' => $nearBy[0]->id,
+            'receiver_type' => 'pharmist',
+            'sender_id' => $auth->id,
+            'sender_type' => 'doctor',
+            'object' => 'send',
+            'verb' => 'request',
+            'message' => "Hi {{name}}, prescription for you",
+            'metadata' => json_encode(array(
+                'type' => 'prescription_send',
+                'user_id' => $auth->id,
+                'name' => $auth->name
+            )),
+        ));
+
+        $full_name = $nearBy[0]->name;
+        $subject = "Prescription Request";
+
+        $this->sendEmail('auth.emails.prescription_request', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $nearBy[0]->email, $this->_fromName);
+
+
         $full_name = $request['patient_name'];
         $subject = "Doctor has written the prescriptions";
 
@@ -89,6 +114,7 @@ class DoctorAppointmentController extends Controller
         $appointment_seen->save();
 
         $appointment_detail = AppointmentRequest::where('id', $id)->first()->load('users');
+
 
         return view('admin.user.doctor_appointment.show', compact('appointment_detail'));
     }
@@ -114,6 +140,15 @@ class DoctorAppointmentController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function format(Request $request)
+    {
+        $medical_history_seen = User::find(Auth::user()->id);
+        $medical_history_seen->seen = 'Seen';
+        $medical_history_seen->save();
+
+        return redirect()->route('admin.patient.history');
     }
 
     /**

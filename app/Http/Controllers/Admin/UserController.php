@@ -19,7 +19,7 @@ class UserController extends Controller
 
     	$userType = Usertype::find($userId);
     	//$userType = Usertype::where('id', '=', $user->id)->first();
-
+        
     	return view('admin.user.index', compact('user', 'userType'));
 
     }

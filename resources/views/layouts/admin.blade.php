@@ -372,6 +372,11 @@
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="{{asset('admin/assets/js/demo.js')}}"></script>
 
+     @yield('page.bottom-script')
+
+    <script src="{{asset('js/dsite.js')}}" type="text/javascript"></script>
+
+
 
 	<script type="text/javascript">
     	$(document).ready(function(){

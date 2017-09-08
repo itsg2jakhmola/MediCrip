@@ -435,10 +435,17 @@ class NotificationController extends Controller
 				$data['callback'] = 'url';
 				$data['url'] = $url;
 			}
-			break;
-			case 'request_rejected':
+			case 'send_tracking':
 			{
-				$url = url('feasts');
+				$url = url('admin/pharmist_setting');
+
+				$data['callback'] = 'url';
+				$data['url'] = $url;
+			}
+			break;
+			case 'alternate_prescription':
+			{
+				$url = url('admin/docappoint_setting/');
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;

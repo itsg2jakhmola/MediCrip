@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\DoctorPrescription;
 use App\PharmistRequest;
+use App\Notification;
+use App\PharmaTracking;
 use App\Http\Requests;
+use App\User;
 use Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EmailTrait;
 
 class PharmacyController extends Controller
 {
+    use EmailTrait;
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,16 @@ class PharmacyController extends Controller
     {
         $auth = Auth::user();
 
-        $prescription_list = DoctorPrescription::where('to_pharmist', $auth->id)->get()->load('doctor');
+        if($auth->user_type == 1){
+            $prescription_list = DoctorPrescription::where('for_patient', $auth->id)->get()->load('doctor');    
+        }
+        if($auth->user_type == 2){
+            $prescription_list = DoctorPrescription::where('from_doctor', $auth->id)->get()->load('doctor');    
+        }
+        if($auth->user_type == 3){
+            $prescription_list = DoctorPrescription::where('to_pharmist', $auth->id)->get()->load('doctor');    
+        }
+        
     
 
         return view('admin.user.prescription.index', compact('prescription_list'));   
@@ -44,7 +58,33 @@ class PharmacyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $patient = User::find($request->patient_id);
+        $auth = Auth::user();
+        $pharmaTracking = PharmaTracking::create($request->all());
+        
+
+        // add notification
+        Notification::create(array(
+            'receiver_id' => $patient->id,
+            'receiver_type' => 'patient',
+            'sender_id' => $auth->id,
+            'sender_type' => 'pharmist',
+            'object' => 'send',
+            'verb' => 'tracking',
+            'message' => "Hi {{name}} has sent your prescription tracking",
+            'metadata' => json_encode(array(
+                'type' => 'send_tracking',
+                'user_id' => $auth->id,
+                'name' => $auth->name
+            )),
+        ));
+
+        $full_name = $patient->name;
+        $subject = "Your Prescription is ready ";
+
+        $this->sendEmail('auth.emails.prescription_done', ["full_name" => $full_name, "pharmist" => $auth], $subject, $patient->email, $this->_fromName);
+
+        return redirect()->route('admin.pharmist_setting.index')->with('status', 'Prescription ready for patient');
     }
 
     /**
@@ -55,13 +95,15 @@ class PharmacyController extends Controller
      */
     public function show($id)
     {
+        $user = Auth::user();
         $prescription_seen = DoctorPrescription::find($id);
         $prescription_seen->seen = 'Seen';
         $prescription_seen->save();
 
-        $prescription_detail = DoctorPrescription::where('id', $id)->first()->load('doctor');
+        $prescription_detail = DoctorPrescription::where('id', $id)->first()->load('doctor', 'patient', 'pharmist');
+        
 
-        return view('admin.user.prescription.show', compact('prescription_detail'));
+        return view('admin.user.prescription.show', compact('prescription_detail', 'user'));
     }
 
     /**
@@ -84,6 +126,7 @@ class PharmacyController extends Controller
      */
     public function update(Request $request, $id)
     {
+            $auth = Auth::user();    
 
             $this->validate($request, [
                 'alternate_prescription'     => 'required',
@@ -94,6 +137,22 @@ class PharmacyController extends Controller
             $pharmistRequest->alternate_prescription = $request['alternate_prescription'];
 
             $pharmistRequest->save();
+
+             // add notification
+            Notification::create(array(
+                'receiver_id' => $pharmistRequest->from_doctor,
+                'receiver_type' => 'doctor',
+                'sender_id' => $auth->id,
+                'sender_type' => 'pharmist',
+                'object' => 'alternate',
+                'verb' => 'prescription',
+                'message' => "Hi {{name}} has request for alternate prescription",
+                'metadata' => json_encode(array(
+                    'type' => 'alternate_prescription',
+                    'user_id' => $auth->id,
+                    'name' => $auth->name
+                )),
+            ));
 
             return redirect()->route('admin.pharmist_setting.index')->with('status', 'Alternate Prescription send successfully');
 

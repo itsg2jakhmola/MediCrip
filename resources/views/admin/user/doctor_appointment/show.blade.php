@@ -29,6 +29,11 @@
                             <th>Appointment Date/Time</th>
                             <td>{{ $appointment_detail->appointment_time }}</td>
                         </tr>
+
+                        <tr>
+                            <th>Message from Pharmyst</th>
+                            <td>{{ $appointment_detail->message_from_pharmist }}</td>
+                        </tr>
                         
                         <tr>
                               <form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.docappoint_setting.store') }}">
@@ -55,10 +60,10 @@
                                         'method' => 'POST',
                                         'route' => ['admin.docappoint_setting.format'])) !!}
                                   
-                                    @if ($appointment_detail->seen == 'Seen')
+                                    @if ($auth->seen == 'Seen')
                                         <button type="submit" disabled class="btn btn-xs btn-danger" title="showHistory"><i class="mdi mdi-delete">Show medical History</i></button>
                                     @else
-                                        <button type="submit" class="btn btn-xs btn-danger" title="Delete"><i class="mdi mdi-delete">Show medical History</i></button>
+                                        <button type="submit" class="btn btn-xs btn-danger" title="Delete"><i class="mdi mdi-delete">Show medical History </i></button>
                                     @endif  
 
                                     

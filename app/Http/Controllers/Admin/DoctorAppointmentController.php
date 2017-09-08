@@ -49,14 +49,16 @@ class DoctorAppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $patient = User::find($request->to_patient);
+
         $auth = Auth::user();
-        $latitude = $auth->lat;
-        $longitude = $auth->lng;
+        $latitude = $patient->lat;
+        $longitude = $patient->lng;
         
         $nearBy = DB::select(
                "SELECT *,  ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( lat ) ) ) ) AS distance FROM users where user_type = 3 ORDER BY distance LIMIT 0 , 1
             ");
-
 
         $doctorPrescription = new DoctorPrescription;
         $doctorPrescription->for_patient = $request['to_patient'];
@@ -98,7 +100,7 @@ class DoctorAppointmentController extends Controller
         $this->sendEmail('auth.emails.doctor_prescription', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $request['patient_email'], $this->_fromName);
 
 
-        return redirect()->route('admin.docappoint_setting.index')->with('status', 'Prescription send successfully');
+        return redirect()->route('admin.docappoint_setting.index')->with('status', 'Prescription send successfully to ' . $nearBy[0]->name);
     }
 
     /**
@@ -109,14 +111,14 @@ class DoctorAppointmentController extends Controller
      */
     public function show($id)
     {
+        $auth = Auth::user();
         $appointment_seen = AppointmentRequest::find($id);
         $appointment_seen->seen = 'Seen';
         $appointment_seen->save();
 
         $appointment_detail = AppointmentRequest::where('id', $id)->first()->load('users');
-
-
-        return view('admin.user.doctor_appointment.show', compact('appointment_detail'));
+        
+        return view('admin.user.doctor_appointment.show', compact('appointment_detail', 'auth'));
     }
 
     /**

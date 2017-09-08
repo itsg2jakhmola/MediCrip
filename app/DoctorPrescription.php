@@ -19,4 +19,14 @@ class DoctorPrescription extends Model
     public function doctor(){
     	return $this->belongsTo(User::class, 'from_doctor', 'id');
     }
+
+    public function patient()
+    {
+    	return $this->belongsTo(User::class, 'for_patient', 'id');
+    }
+
+    public function pharmist()
+    {
+    	return $this->belongsTo(User::class, 'to_pharmist', 'id');
+    }
 }

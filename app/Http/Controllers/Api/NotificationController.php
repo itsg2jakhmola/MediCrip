@@ -430,14 +430,52 @@ class NotificationController extends Controller
 			break;
 			case 'send_request':
 			{
-				$url = url('admin/pharmist_setting');
+				$content = '';
+				$metadata = json_decode($n->metadata, true);
+
+				if(array_key_exists('return_id', $metadata)) {
+					$content = $metadata['return_id'];
+					unset($metadata['return_id']);
+				}
+
+				// prepare pattern search for metadata
+				foreach($metadata as $key => $meta) {
+					$pattern['{{'.$key.'}}'] = $meta;
+				}
+
+				// prepare notification message unformatted
+				$content = strtr($content, $pattern);
+
+				$data['callback'] = 'redirect to link';
+				$data['return_id'] = $content;
+
+				$url = url('admin/pharmist_setting/'.$data['return_id']);
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
 			}
 			case 'send_tracking':
 			{
-				$url = url('admin/pharmist_setting');
+				$content = '';
+				$metadata = json_decode($n->metadata, true);
+
+				if(array_key_exists('return_id', $metadata)) {
+					$content = $metadata['return_id'];
+					unset($metadata['return_id']);
+				}
+
+				// prepare pattern search for metadata
+				foreach($metadata as $key => $meta) {
+					$pattern['{{'.$key.'}}'] = $meta;
+				}
+
+				// prepare notification message unformatted
+				$content = strtr($content, $pattern);
+
+				$data['callback'] = 'redirect to link';
+				$data['return_id'] = $content;
+
+				$url = url('admin/pharmist_setting/'.$data['return_id']);
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;
@@ -445,7 +483,26 @@ class NotificationController extends Controller
 			break;
 			case 'alternate_prescription':
 			{
-				$url = url('admin/docappoint_setting/');
+				$content = '';
+				$metadata = json_decode($n->metadata, true);
+
+				if(array_key_exists('return_id', $metadata)) {
+					$content = $metadata['return_id'];
+					unset($metadata['return_id']);
+				}
+
+				// prepare pattern search for metadata
+				foreach($metadata as $key => $meta) {
+					$pattern['{{'.$key.'}}'] = $meta;
+				}
+
+				// prepare notification message unformatted
+				$content = strtr($content, $pattern);
+
+				$data['callback'] = 'redirect to link';
+				$data['return_id'] = $content;
+				
+				$url = url('admin/docappoint_setting/'.$data['return_id']);
 
 				$data['callback'] = 'url';
 				$data['url'] = $url;

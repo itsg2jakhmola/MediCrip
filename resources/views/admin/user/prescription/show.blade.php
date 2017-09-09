@@ -37,7 +37,7 @@
                             <th>Doctor Name</th>
                             <td>
                                 {{ $prescription_detail['doctor']->name }}
-                                @if(Auth::user()->id == 3)
+                                @if(Auth::user()->user_type == 3)
                                 <a href="javascript:void(0);" onclick="showReply(event);" class="replydoctor" id="reply-doctor">
                                   <i class="fa fa-reply" aria-hidden="true"></i>
                                 </a>
@@ -165,6 +165,7 @@
                                 <input type="hidden" value="{{$prescription_detail['doctor']->email}}" name="doctor_email">
 
                                 <input type="hidden" value="{{$prescription_detail->appointment_id}}" name="appoint_id">
+                                <input type="hidden" value="{{$prescription_detail['booking_request']->id}}" name="appointment_request_id">
                                 <br>
                                 <button type="submit" class="btn btn-success">Submit</button>
                                </td>

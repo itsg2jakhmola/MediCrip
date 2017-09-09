@@ -100,7 +100,7 @@ class PharmacyController extends Controller
         $prescription_seen->seen = 'Seen';
         $prescription_seen->save();
 
-        $prescription_detail = DoctorPrescription::where('id', $id)->first()->load('doctor', 'patient', 'pharmist', 'tracking');
+        $prescription_detail = DoctorPrescription::where('id', $id)->first()->load('doctor', 'patient', 'pharmist', 'tracking', 'booking_request');
         
         
         return view('admin.user.prescription.show', compact('prescription_detail', 'user'));
@@ -150,6 +150,7 @@ class PharmacyController extends Controller
                 'metadata' => json_encode(array(
                     'type' => 'alternate_prescription',
                     'user_id' => $auth->id,
+                    'return_id' => $request->appointment_request_id,
                     'name' => $auth->name
                 )),
             ));

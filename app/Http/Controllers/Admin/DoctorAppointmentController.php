@@ -93,6 +93,7 @@ class DoctorAppointmentController extends Controller
                     'metadata' => json_encode(array(
                         'type' => 'prescription_send',
                         'user_id' => $auth->id,
+                        'return_id' => $doctorPrescription->id,
                         'name' => $auth->name
                     )),
                 ));
@@ -116,6 +117,7 @@ class DoctorAppointmentController extends Controller
                             'metadata' => json_encode(array(
                                 'type' => 'prescription_send',
                                 'user_id' => $auth->id,
+                                'return_id' => $doctorPrescription->id,
                                 'name' => $auth->name
                             )),
                         ));

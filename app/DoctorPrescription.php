@@ -34,4 +34,9 @@ class DoctorPrescription extends Model
     {
         return $this->hasOne(PharmaTracking::class, 'appointment_id', 'appointment_id');
     }
+
+    public function booking_request()
+    {
+        return $this->hasOne(AppointmentRequest::class, 'appointment_id', 'appointment_id');       
+    }
 }

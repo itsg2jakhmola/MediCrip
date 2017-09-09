@@ -47,7 +47,12 @@ class DoctorAppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function store(Request $request){
+
+    }
+
+    public function updateCreate(Request $request, $id=0)
     {
         
         $patient = User::find($request->to_patient);
@@ -60,46 +65,73 @@ class DoctorAppointmentController extends Controller
                "SELECT *,  ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( lat ) ) ) ) AS distance FROM users where user_type = 3 ORDER BY distance LIMIT 0 , 1
             ");
 
-        $doctorPrescription = new DoctorPrescription;
-        $doctorPrescription->for_patient = $request['to_patient'];
-        $doctorPrescription->to_pharmist = $nearBy[0]->id;
-        $doctorPrescription->lat = $nearBy[0]->lat;
-        $doctorPrescription->lng = $nearBy[0]->lng;
-        $doctorPrescription->distance = $nearBy[0]->distance;
-        $doctorPrescription->appointment_id = $request['appoint_id'];
-        $doctorPrescription->from_doctor = $auth->id;
-        $doctorPrescription->prescription = $request['prescription'];
-        $doctorPrescription->save();
+            $doctorPrescription = DoctorPrescription::firstOrNew([
+                'appointment_id' => $request->appoint_id,
+                'from_doctor' => $auth->id,
+            ]);
+
+            $doctorPrescription->for_patient = $request['to_patient'];
+            $doctorPrescription->to_pharmist = $nearBy[0]->id;
+            $doctorPrescription->lat = $nearBy[0]->lat;
+            $doctorPrescription->lng = $nearBy[0]->lng;
+            $doctorPrescription->distance = $nearBy[0]->distance;
+            $doctorPrescription->appointment_id = $request['appoint_id'];
+            $doctorPrescription->from_doctor = $auth->id;
+            $doctorPrescription->prescription = $request['prescription'];
+            $doctorPrescription->save();
+       
+            if($doctorPrescription->exists){
+                // add notification
+                Notification::create(array(
+                    'receiver_id' => $nearBy[0]->id,
+                    'receiver_type' => 'pharmist',
+                    'sender_id' => $auth->id,
+                    'sender_type' => 'doctor',
+                    'object' => 'send',
+                    'verb' => 'request',
+                    'message' => "Hi {{name}}, update the prescription for you",
+                    'metadata' => json_encode(array(
+                        'type' => 'prescription_send',
+                        'user_id' => $auth->id,
+                        'name' => $auth->name
+                    )),
+                ));
+
+             $full_name = $nearBy[0]->name;
+            $subject = "Prescription update request";
+
+            $this->sendEmail('auth.emails.prescription_update', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $nearBy[0]->email, $this->_fromName);
+
+            }else{      
+
+                // add notification
+                        Notification::create(array(
+                            'receiver_id' => $nearBy[0]->id,
+                            'receiver_type' => 'pharmist',
+                            'sender_id' => $auth->id,
+                            'sender_type' => 'doctor',
+                            'object' => 'send',
+                            'verb' => 'request',
+                            'message' => "Hi {{name}}, prescription for you",
+                            'metadata' => json_encode(array(
+                                'type' => 'prescription_send',
+                                'user_id' => $auth->id,
+                                'name' => $auth->name
+                            )),
+                        ));
+
+            $full_name = $nearBy[0]->name;
+            $subject = "Prescription Request";
+
+            $this->sendEmail('auth.emails.prescription_request', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $nearBy[0]->email, $this->_fromName);
 
 
-        // add notification
-        Notification::create(array(
-            'receiver_id' => $nearBy[0]->id,
-            'receiver_type' => 'pharmist',
-            'sender_id' => $auth->id,
-            'sender_type' => 'doctor',
-            'object' => 'send',
-            'verb' => 'request',
-            'message' => "Hi {{name}}, prescription for you",
-            'metadata' => json_encode(array(
-                'type' => 'prescription_send',
-                'user_id' => $auth->id,
-                'name' => $auth->name
-            )),
-        ));
+            $full_name = $request['patient_name'];
+            $subject = "Doctor has written the prescriptions";
 
-        $full_name = $nearBy[0]->name;
-        $subject = "Prescription Request";
+            $this->sendEmail('auth.emails.doctor_prescription', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $request['patient_email'], $this->_fromName);
 
-        $this->sendEmail('auth.emails.prescription_request', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $nearBy[0]->email, $this->_fromName);
-
-
-        $full_name = $request['patient_name'];
-        $subject = "Doctor has written the prescriptions";
-
-        $this->sendEmail('auth.emails.doctor_prescription', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $request['patient_email'], $this->_fromName);
-
-
+        }
         return redirect()->route('admin.docappoint_setting.index')->with('status', 'Prescription send successfully to ' . $nearBy[0]->name);
     }
 
@@ -116,7 +148,8 @@ class DoctorAppointmentController extends Controller
         $appointment_seen->seen = 'Seen';
         $appointment_seen->save();
 
-        $appointment_detail = AppointmentRequest::where('id', $id)->first()->load('users');
+        $appointment_detail = AppointmentRequest::where('id', $id)->first()->load('users','prescription');
+
         
         return view('admin.user.doctor_appointment.show', compact('appointment_detail', 'auth'));
     }

@@ -14,7 +14,7 @@
                 <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <th>Patient Name</th>
+                            <th>Patient Name </th>
                             <td>{{ ucfirst($appointment_detail['users']->name)}}</td>
                         </tr>
                         <tr>
@@ -32,14 +32,16 @@
 
                         <tr>
                             <th>Message from Pharmyst</th>
-                            <td>{{ $appointment_detail->message_from_pharmist }}</td>
+                            <td>{{ ($appointment_detail['prescription']) ? $appointment_detail['prescription']->alternate_prescription : '' }}</td>
                         </tr>
                         
                         <tr>
-                              <form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.docappoint_setting.store') }}">
+                              <form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.docappoint_setting.updateCreate', ['id'=> $appointment_detail->appointment_id]) }}">
+
                                 {{ csrf_field() }}
+
                                 <th>Add Prescription</th>
-                                <td><textarea name="prescription" class="form-control" placeholder="Write Prescription for patient.."></textarea>
+                                <td><textarea name="prescription" class="form-control" placeholder="Write Prescription for patient..">{{ ($appointment_detail['prescription']) ? $appointment_detail['prescription']->prescription : '' }}</textarea>
                                 <input type="hidden" value="{{$appointment_detail['users']->id}}" name="to_patient">
 
                                 <input type="hidden" value="{{$appointment_detail['users']->name}}" name="patient_name">

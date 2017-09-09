@@ -86,10 +86,3 @@
 </div>
 
 @endsection
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script>
-  $( function() {
-    $( "#appointment_date_edit" ).datepicker();
-  } );
-</script>

@@ -29,4 +29,9 @@ class DoctorPrescription extends Model
     {
     	return $this->belongsTo(User::class, 'to_pharmist', 'id');
     }
+
+    public function tracking()
+    {
+        return $this->hasOne(PharmaTracking::class, 'appointment_id', 'appointment_id');
+    }
 }

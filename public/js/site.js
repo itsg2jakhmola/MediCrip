@@ -52,3 +52,4 @@ function swapConfig(x) {
 
     $( "#appointment_date_edit" ).datepicker();
   
+  	

@@ -100,9 +100,9 @@ class PharmacyController extends Controller
         $prescription_seen->seen = 'Seen';
         $prescription_seen->save();
 
-        $prescription_detail = DoctorPrescription::where('id', $id)->first()->load('doctor', 'patient', 'pharmist');
+        $prescription_detail = DoctorPrescription::where('id', $id)->first()->load('doctor', 'patient', 'pharmist', 'tracking');
         
-
+        
         return view('admin.user.prescription.show', compact('prescription_detail', 'user'));
     }
 

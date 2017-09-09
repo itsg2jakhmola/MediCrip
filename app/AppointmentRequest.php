@@ -15,4 +15,9 @@ class AppointmentRequest extends Model
     public function users($local_key = 'user_id'){
     	return $this->belongsTo('App\User', $local_key, 'id');
     }
+
+    public function prescription()
+    {
+    	return $this->hasOne(DoctorPrescription::class, 'from_doctor', 'assign_to');
+    }
 }

@@ -16,10 +16,17 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    
 
     <!-- Bootstrap core CSS     -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" />
+
+    <link href="{{asset('admin/assets/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" />
 
 
     <!-- Animation library for notifications   -->
@@ -197,9 +204,8 @@
                               <a href="javascript:void(0)" class="dropdown-toggle ncount" data-ncount="{{Auth::user()->notification_count}}" data-toggle="dropdown">
                                     <i class="fa fa-globe"></i>
                                     <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs">5</span>
+                                    <span class="notification hidden-sm hidden-xs"></span>
 									<p class="hidden-lg hidden-md">
-										5 Notifications
 										<b class="caret"></b>
 									</p>
                               </a>
@@ -328,6 +334,12 @@
 
     <!--   Core JS Files   -->
     <script src="{{asset('admin/assets/js/jquery-1.10.2.js')}}" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.js"></script>
 	<script src="{{asset('admin/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
 
     <script src="{{asset('js/notify.js')}}" type="text/javascript"></script>
@@ -367,10 +379,15 @@
 
     <script src="{{asset('admin/assets/js/lightbox-plus-jquery.js')}}"></script>
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="{{asset('admin/assets/js/demo.js')}}"></script>
+
+    <script src="{{asset('admin/assets/js/bootstrap-datetimepicker.js')}}" type="text/javascript"></script>
+
+    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+    <script src="{{asset('admin/assets/js/locales/bootstrap-datetimepicker.fr.js')}}" type="text/javascript"></script>
 
      @yield('page.bottom-script')
 

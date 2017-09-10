@@ -43,7 +43,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
     Route::post('update/format/{id?}', ['uses' =>'Admin\DoctorAppointmentController@updateCreate', 'as' => 'admin.docappoint_setting.updateCreate']);
 
     Route::get('patient/medical_history', ['uses' => 'Admin\PatientMedicalHistory@show', 'as' => 'admin.patient.history']);
-    Route::get('/review', 'Admin\ReviewController@index');
+    Route::get('/review', ['uses' => 'Admin\ReviewController@index', 'as' => 'admin.review.index']);
+    Route::get('/review/{id}', ['uses' => 'Admin\ReviewController@show', 'as' => 'admin.review.show']);
+    Route::post('/review/send/{id}', ['uses' => 'Admin\ReviewController@review', 'as' => 'admin.review.review']);
     Route::get('/cancelation_list', 'Admin\CancelationListController@index');
     Route::get('/add_prscriptions', 'Admin\AddPrescriptionController@index');
     Route::get('/appoinment_reminder', 'Admin\ApppoinmentReminderController@index');

@@ -31,7 +31,7 @@
                             @foreach ($medical_detail as $info)
                                  <tr data-entry-id="{{ $info->id }}">
                                     <td> {{ ucfirst($info->name) }} </td>
-                                    <td> {{ ucfirst($info->description) }} </td>
+                                    <td> {{ ucfirst(substr($info->description,0,10). ".....") }} </td>
                                     <!-- <td> {{ $info->medical_scan }}</td> -->
                                     <td>
                                         <a class="example-image-link imgLightBox" href="{{url( $info->medical_scan_path )}}" data-lightbox="example-1"> 

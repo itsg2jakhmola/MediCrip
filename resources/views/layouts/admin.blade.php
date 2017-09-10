@@ -16,7 +16,8 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
+     <link href = "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel = "stylesheet">
+     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -392,6 +393,7 @@
      @yield('page.bottom-script')
 
     <script src="{{asset('js/dsite.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/review.js')}}" type="text/javascript"></script>
 
 
 

@@ -26,7 +26,8 @@ class PharmacyController extends Controller
         $auth = Auth::user();
 
         if($auth->user_type == 1){
-            $prescription_list = DoctorPrescription::where('for_patient', $auth->id)->get()->load('doctor');    
+            $prescription_list = DoctorPrescription::where('for_patient', $auth->id)->get()->load('doctor', 'pharmist'); 
+            
         }
         if($auth->user_type == 2){
             $prescription_list = DoctorPrescription::where('from_doctor', $auth->id)->get()->load('doctor');    
@@ -58,10 +59,23 @@ class PharmacyController extends Controller
      */
     public function store(Request $request)
     {
+
         $patient = User::find($request->patient_id);
         $auth = Auth::user();
-        $pharmaTracking = PharmaTracking::create($request->all());
-        
+        //$pharmaTracking = PharmaTracking::create($request->all());
+        $pharmaTracking = PharmaTracking::firstOrNew([
+               'appointment_id' => $request->appointment_id 
+        ]);   
+
+        $pharmaTracking->appointment_id =  $request->appointment_id;
+        $pharmaTracking->doctor_id =  $request->doctor_id;
+        $pharmaTracking->patient_id =  $request->patient_id;
+        $pharmaTracking->packed_date =  $request->packed_date;
+        $pharmaTracking->pack_time = $request->pack_time;
+        $pharmaTracking->pharma_name = $request->pharma_name;
+        $pharmaTracking->amount = $request->amount;
+        $pharmaTracking->save();
+
 
         // add notification
         Notification::create(array(

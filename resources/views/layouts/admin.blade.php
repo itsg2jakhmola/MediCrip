@@ -202,18 +202,14 @@
                             </div> -->
 
                             <div class="deshboard-links nlist">
-                              <a href="javascript:void(0)" class="dropdown-toggle ncount" data-ncount="{{Auth::user()->notification_count}}" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs"></span>
-									<p class="hidden-lg hidden-md">
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <div class="">
-                                <ul class="nscroll" data-total="" data-nextPage="" style="overflow-y:scroll; max-height: 330px; cursor:pointer">
-                                </ul>
-                            </div>
+                                <a href="javascript:void(0)" class="ncount" data-ncount="{{Auth::user()->notification_count}}">
+                                    <i class="mdi mdi-bell"></i>
+                                    <span class="label label-danger">{{Auth::user()->notification_count}}</span>
+                                </a>
+                                <div class="ncontainer">
+                                    <ul class="nscroll" data-total="" data-nextPage="" style="overflow-y:scroll; max-height: 330px; cursor:pointer">
+                                    </ul>
+                                </div>
                             </div>
                               <!-- <ul class="dropdown-menu">
                                 <li><a href="#">Notification 1</a></li>

@@ -108,7 +108,7 @@
                             </td>
                             
                             <td class="input-append date form_datetime">
-                                    <input type="text" id="amount" class="form-control" name="amount" placeholder="Input Amount" value="{{old('amount')}}">
+                                    <input type="text" id="amount" class="form-control" name="amount" placeholder="Input Amount" value="{{ ($prescription_detail['tracking']) ? $prescription_detail['tracking']->amount : '' }}">
                                 </div>
                                     <span class="add-on"><i class="icon-th"></i></span>
                             </div>
@@ -127,13 +127,13 @@
 
                                 <input type="hidden" value="{{  $user->name }}" name="pharma_name">
 
-                               <input type="text" id="pickup_date" class="form-control" name="packed_date" placeholder="Input Pickup Date" value="{{old('pickup_date')}}"> 
+                               <input type="text" id="pickup_date" class="form-control" name="packed_date" placeholder="Input Pickup Date" value="{{ ($prescription_detail['tracking']) ? $prescription_detail['tracking']->packed_date : '' }}"> 
                             </td>
                             <tr>
                             <th>Pickup Time</th>
                             <td>
 
-                            <input type="text" id="input-a" class="form-control" name="pack_time" placeholder="Input Pickup Date" value="{{old('pickup_date')}}" data-default="20:48"> 
+                            <input type="text" id="input-a" class="form-control" name="pack_time" placeholder="Input Pickup Date" value="{{ ($prescription_detail['tracking']) ? $prescription_detail['tracking']->pack_time : '' }}" data-default="20:48"> 
 
                             </td>
                             </tr>

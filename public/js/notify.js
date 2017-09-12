@@ -6,9 +6,13 @@ $.ajaxSetup({
 	}
 });
 
+$("document").ready(function(){
+	$(".ncontainer").css('display', 'none');
+})
+
 // Handle notification bell
 $(".nlist").on('click', function(e) {
-
+	$(".ncontainer").css('display', 'block');
 	e.stopPropagation();
 	var $ncount = $('a.ncount');
 

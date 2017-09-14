@@ -73,21 +73,17 @@
 
             <ul class="nav">
              <li {{ (current_page('welcome')) ? 'class=active' : ''}}>
-                   <!--  <a href="{{url('/admin/welcome')}}">
+                    <a href="{{url('/admin/welcome')}}">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
-                    </a> -->
-                    <a href="{{url('/admin/welcome')}}">
-                        <i class="pe-7s-user"></i>
-                        <p>User Profile </p>
                     </a>
                 </li>
-               <!--  <li {{ (current_page('user')) ? 'class=active' : ''}}>
+                <li {{ (current_page('user')) ? 'class=active' : ''}}>
                     <a href="{{url('/admin/user')}}">
                         <i class="pe-7s-user"></i>
                         <p>User Profile </p>
                     </a>
-                </li> -->
+                </li>
 
                 @if(auth()->user()->user_type == 1)
                 <li {{ (current_page('appointment_setting')) ? 'class=active' : ''}}>
@@ -207,11 +203,11 @@
 
                             <div class="deshboard-links nlist">
                                 <a href="javascript:void(0)" class="ncount" data-ncount="{{Auth::user()->notification_count}}">
-                                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                                    <i class="mdi mdi-bell"></i>
                                     <span class="label label-danger">{{Auth::user()->notification_count}}</span>
                                 </a>
                                 <div class="ncontainer">
-                                    <ul class="nscroll" data-total="" data-nextPage="" style="  cursor:pointer">
+                                    <ul class="nscroll" data-total="" data-nextPage="" style="overflow-y:scroll; max-height: 330px; cursor:pointer">
                                     </ul>
                                 </div>
                             </div>
@@ -223,15 +219,15 @@
                                 <li><a href="#">Another notification</a></li>
                               </ul> -->
                         </li>
-                        <!-- <li>
+                        <li>
                            <a href="">
                                 <i class="fa fa-search"></i>
 								<p class="hidden-lg hidden-md">Search</p>
                             </a>
-                        </li> -->
+                        </li>
                     </ul>
 
-                    <!-- <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right">
                         <li>
                            <a href="">
                                <p>Account</p>
@@ -253,7 +249,7 @@
                                 <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>
                               </ul>
-                        </li> -->
+                        </li>
                          <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())

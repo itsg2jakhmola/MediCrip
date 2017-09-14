@@ -17,10 +17,9 @@
                                     @if(Auth::user()->user_type == 1) 
                                     <thead>
                                         <th>Appointment ID</th>
-                                    	<th>Pharmacy Name</th>
-                                    	<th>Pharmacy Address</th>
-                                        <th>Pharmacy Email</th>
-                                    	<th>Pharmacy Phone</th>
+                                    	<th>Doctor Name</th>
+                                    	<th>Appointment Date</th>
+                                        <th>Seen</th>
                                     	<th>Action</th>
                                     </thead>
                                     @else
@@ -41,11 +40,14 @@
                                     
                                     <td> #{{ $info->appointment_id }} </td>
 
-                                    <td> {{ ucfirst($info['pharmist']->name) }} </td>
-                                    <td> {{ ucfirst($info['pharmist']->address) }} </td>
+                                    <td> {{ ucfirst($info['doctor']->name) }}  </td>
+                                    <td> <span style="display:none;">                                            
+                                            {{ \Carbon\Carbon::parse($info['booking_request']->appointment_time)->format('Y/m/d')}}
+                                        </span>
+                                        {{ $info['booking_request']->appointment_time }} </td>
                                     
-                                    <td> {{ $info['pharmist']->email }} </td>
-                                    <td> {{ $info['pharmist']->phone_number }} </td>
+                                    <td> {{ $info['booking_request']->seen }} </td>
+                                    
 
                                     @else
                                     <td> #{{ $info->appointment_id }} </td>

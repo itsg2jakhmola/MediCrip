@@ -18,6 +18,6 @@ class AppointmentRequest extends Model
 
     public function prescription()
     {
-    	return $this->hasOne(DoctorPrescription::class, 'from_doctor', 'assign_to');
+    	return $this->hasOne(DoctorPrescription::class, 'appointment_id', 'appointment_id');
     }
 }

@@ -30,8 +30,9 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
 {
-    Route::get('/welcome', 'Admin\DashboardController@index');
-    Route::get('/user', 'Admin\UserController@index');
+    //Route::get('/welcome', 'Admin\DashboardController@index');
+    Route::get('/welcome', 'Admin\UserController@index');
+    //Route::get('/user', 'Admin\UserController@index');
     //Route::get('/apppoinment', 'Admin\AppoinmentController@index');
     //Route::get('/prescription', 'Admin\PrescriptionController@index');
     Route::resource('medical_history', 'Admin\MedicalHistoryController');

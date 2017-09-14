@@ -51,7 +51,7 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-           'name' => 'required|max:255',
+           'first_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required',
@@ -73,7 +73,9 @@ class AuthController extends Controller
     {
         
         $user =  User::create([
-            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'name' => $data['first_name'] . " " . $data['last_name'],
             'email' => $data['email'],
             'user_type' => $data['user_type'],
             'dob' => ($data['dob']) ? $data['dob'] : '',
@@ -95,7 +97,7 @@ class AuthController extends Controller
 
         $subject = 'MedCrip Application login credentials';
 
-        $this->sendEmail('auth.emails.application_accepted', ["full_name" => $data['name'], "username" => $data['email'], "password" => $data['password']], $subject, $data['email'], $this->_fromName);
+        $this->sendEmail('auth.emails.application_accepted', ["full_name" => $data['first_name'], "username" => $data['email'], "password" => $data['password']], $subject, $data['email'], $this->_fromName);
 
         return $user;
         

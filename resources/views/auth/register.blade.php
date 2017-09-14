@@ -31,13 +31,29 @@
      <input type="hidden" name="doctor_practice">
       <input type="hidden" name="fax_number">
       <div class="form-group">
+        <input type="text" name="first_name" class="form-control" placeholder="Patient First Name">
+        @if ($errors->has('first_name'))
+            <span class="help-block">
+                <strong>{{ $errors->first('first_name') }}</strong>
+            </span>
+        @endif
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="last_name" class="form-control" placeholder="Patient Last Name">
+      </div>  
+
+
+      <!-- <div class="form-group">
         <input type="text" name="name" class="form-control" placeholder="Patient Name">
         @if ($errors->has('name'))
             <span class="help-block">
                 <strong>{{ $errors->first('name') }}</strong>
             </span>
         @endif
-      </div>
+      </div> -->
+
+
       <div class="form-group">
         <input type="email" name="email" class="form-control" placeholder="Email">
         @if ($errors->has('email'))
@@ -175,14 +191,26 @@
   <input type="hidden" name="medical_number">
   <input type="hidden" name="insurance_company">
   <input type="hidden" name="insurance_number">
-      <div class="form-group">
+      <!-- <div class="form-group">
         <input type="text" name="name" class="form-control" placeholder="Doctor Name">
         @if ($errors->has('name'))
             <span class="help-block">
                 <strong>{{ $errors->first('name') }}</strong>
             </span>
         @endif
+      </div> -->
+      <div class="form-group">
+        <input type="text" name="first_name" class="form-control" placeholder="Doctor First Name">
+        @if ($errors->has('first_name'))
+            <span class="help-block">
+                <strong>{{ $errors->first('first_name') }}</strong>
+            </span>
+        @endif
       </div>
+
+      <div class="form-group">
+        <input type="text" name="last_name" class="form-control" placeholder="Doctor Last Name">
+      </div>  
       <div class="form-group">
         <input type="email" name="email" class="form-control" placeholder="Email">
         @if ($errors->has('email'))
@@ -248,14 +276,27 @@
   <input type="hidden" name="insurance_company">
   <input type="hidden" name="insurance_number">
   <input type="hidden" name="doctor_practice">
-      <div class="form-group">
+      <!-- <div class="form-group">
         <input type="text" name="name" class="form-control" placeholder="Name of Pharmacy">
         @if ($errors->has('name'))
             <span class="help-block">
                 <strong>{{ $errors->first('name') }}</strong>
             </span>
         @endif
+      </div> -->
+
+      <div class="form-group">
+        <input type="text" name="first_name" class="form-control" placeholder="Pharmist First Name">
+        @if ($errors->has('first_name'))
+            <span class="help-block">
+                <strong>{{ $errors->first('first_name') }}</strong>
+            </span>
+        @endif
       </div>
+
+      <div class="form-group">
+        <input type="text" name="last_name" class="form-control" placeholder="Pharmist Last Name">
+      </div>  
       <div class="form-group">
         <input type="email" name="email" class="form-control" placeholder="Email">
         @if ($errors->has('email'))

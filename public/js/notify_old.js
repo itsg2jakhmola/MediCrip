@@ -104,13 +104,3 @@ $('ul.nscroll').on('click', 'li', function(e) {
 		}
 	});
 });
-
-//Notification Toggle setup
-$(document).ready(function(){
-   $(".deshboard-links.nlist .ncount").click(function(){
-       $(".ncontainer").slideToggle("slow");
-   });
-});
-
-
-

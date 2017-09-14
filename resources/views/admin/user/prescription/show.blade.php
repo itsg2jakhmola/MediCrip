@@ -62,11 +62,15 @@
                             <th>Doctor Phone</th>
                             <td>{{ $prescription_detail['doctor']->phone_number }}</td>
                         </tr>
-                        
-                         @if(Auth::user()->user_type == 1)
-                            <tr>
-                            <th>Pharmacy Phone</th>
-                            <td>{{ $prescription_detail['pharmist']->phone_number }}</td>
+
+                        <tr>
+                            <th>Pharmacy Name</th>
+                            <td>{{ $prescription_detail['pharmist']->name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Pharmacy Address</th>
+                            <td>{{ $prescription_detail['pharmist']->address }}</td>
                         </tr>
 
                         <tr>
@@ -78,6 +82,13 @@
                             </td>
                         </tr>
 
+                         @if(Auth::user()->user_type == 1)
+                            <tr>
+                            <th>Pharmacy Phone</th>
+                            <td>{{ $prescription_detail['pharmist']->phone_number }}</td>
+                        </tr>
+
+
                         <tr>
                             <th>Pickup Date</th>
                             <td>{{ ($prescription_detail['tracking']->packed_date) ? $prescription_detail['tracking']->packed_date : 'Not Yet Ready' }}</td>
@@ -88,10 +99,7 @@
                             <td>{{ ($prescription_detail['tracking']->pack_time) ? $prescription_detail['tracking']->pack_time : 'Not yet Ready' }}</td>
                         </tr>
 
-                        <tr>
-                            <th>Pharmacy Address</th>
-                            <td>{{ $prescription_detail['pharmist']->address }}</td>
-                        </tr>
+                        
                          @endif   
 
                         <tr>
@@ -148,7 +156,7 @@
 
                         
                     </table>
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped" style="float: left;margin-left: 500px;position: relative;bottom: 629px;">
                         <tr class="replydoctorSetting" style="display:none;">
                         
                             {!! Form::model( $prescription_detail, ['route' => ['admin.pharmist_setting.update', $prescription_detail->id], 'method' => 'PATCH', 'files'=>true]) !!}
@@ -157,7 +165,7 @@
                             
                              
                                 <th >Alternative Prescription Request</th>
-                                <td><textarea name="alternate_prescription" class="form-control" placeholder="Write Alternate Prescription for patient.."></textarea>
+                                <td><textarea name="alternate_prescription" class="form-control" placeholder="Write Alternate Prescription for patient..">{{$prescription_detail->alternate_prescription}}</textarea>
                                 <input type="hidden" value="{{$prescription_detail['doctor']->id}}" name="to_doctor">
 
                                 <input type="hidden" value="{{$prescription_detail['doctor']->name}}" name="doctor_name">

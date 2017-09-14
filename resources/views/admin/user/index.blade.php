@@ -21,27 +21,41 @@
 
                                 @endif
 
-                            <div class="content">
+                            <div class="content" style="padding:30px;">
 
                             <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.user.update', ['user/update' => $user->id]) }}">
 
                             {{ csrf_field() }}
 
 
+                                     <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="text" name="name" class="form-control" placeholder="Name" value="{{$user->name}}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if(Auth::user()->user_type == 1)
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <!-- <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Accont (disabled)</label>
                                                 <input type="text" class="form-control" disabled placeholder="Company" value="">
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
+                                        </div> -->
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Date of Birth</label>
                                                 <input type="text" name="dob" class="form-control" placeholder="Date of Birth" value="{{$user->dob}}">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                    </div>
+                                    @endif
+
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
                                                 <input type="email" name="email" value="{{$user->email}}" class="form-control" placeholder="Email">
@@ -49,13 +63,8 @@
                                         </div>
                                     </div>
 
+                                    @if(Auth::user()->user_type == 1)
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Name</label>
-                                                <input type="text" name="name" class="form-control" placeholder="Name" value="{{$user->name}}">
-                                            </div>
-                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Medical Number</label>
@@ -63,9 +72,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
 
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Address</label>
                                                 <input type="text" name="address" class="form-control" placeholder="Home Address" value="{{$user->address}}">
@@ -74,18 +84,24 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone Number</label>
                                                 <input type="text" name="phone_number" class="form-control" placeholder="Phone Number" value="{{$user->phone_number}}">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                    </div>
+
+                                    @if(Auth::user()->user_type == 1)
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Insurance Company</label>
                                                 <input type="text" name="insurance_company" class="form-control" placeholder="Insurance Company" value="{{$user->insurance_company}}">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Insurance Number</label>
@@ -93,12 +109,12 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    @endif
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>About Me</label>
-                                                <textarea rows="5" name="about" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
+                                                <textarea rows="5" name="about" class="form-control" placeholder="Here can be your description">{{$user->about}}</textarea>
                                             </div>
                                         </div>
                                     </div>

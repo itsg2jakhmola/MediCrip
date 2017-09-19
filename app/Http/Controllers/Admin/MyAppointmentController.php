@@ -26,7 +26,7 @@ class MyAppointmentController extends Controller
         $user = Auth::user();
 
         $appointment_list = Appointment::with('appointment_request')
-                            ->where('user_id', $user->id)->get();
+                            ->where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
         //dd($appointment_list);
         
         return view('admin.user.appointment.appointment', compact('appointment_list'));
@@ -73,6 +73,7 @@ class MyAppointmentController extends Controller
             $appointment->lat = $nearBy[0]->lat;
             $appointment->lng = $nearBy[0]->lng;
             $appointment->distance = $nearBy[0]->distance;
+            $appointment->appointment_time = $fixappointment->appointment_time;
             $appointment->speciality = $nearBy[0]->doctor_practice;
             $appointment->notes = $fixappointment->notes;
             $appointment->save();

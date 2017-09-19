@@ -25,7 +25,7 @@ class DoctorAppointmentController extends Controller
     {
         $auth = Auth::user();
 
-        $appointment_list = AppointmentRequest::where('assign_to', $auth->id)->get()->load('users');
+        $appointment_list = AppointmentRequest::where('assign_to', $auth->id)->orderBy('created_at', 'DESC')->get()->load('users');
         
 
         return view('admin.user.doctor_appointment.index', compact('appointment_list'));
@@ -78,7 +78,12 @@ class DoctorAppointmentController extends Controller
             $doctorPrescription->appointment_id = $request['appoint_id'];
             $doctorPrescription->from_doctor = $auth->id;
             $doctorPrescription->prescription = $request['prescription'];
+            $doctorPrescription->set_reminder = $request['set_reminder'];
+            $doctorPrescription->remarks = $request['remarks'];
             $doctorPrescription->save();
+
+            /*$appointmentReminder = AppointmentReminder::where('id',$order_id)->with('feastDate','user')->first();
+            //event(new AppointmentReminder($doctorPrescription));*/
        
             if($doctorPrescription->exists){
                 // add notification
@@ -149,6 +154,7 @@ class DoctorAppointmentController extends Controller
         $appointment_seen = AppointmentRequest::find($id);
         $appointment_seen->seen = 'Seen';
         $appointment_seen->save();
+
 
         $appointment_detail = AppointmentRequest::where('id', $id)->first()->load('users','prescription');
 

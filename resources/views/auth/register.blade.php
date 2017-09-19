@@ -6,17 +6,17 @@
 
       <div class="radio">
         <label>
-          <input type="radio" onchange="swapConfig(this)" id="patient" checked="" name="user_type_check" value="1">
+          <input type="radio" onchange="swapConfig(this)" id="patient" class="patientLogin checkValid" checked="" name="user_type_check" value="1">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Patients</span>
         </label>
         <label>
-          <input type="radio" onchange="swapConfig(this)" id="doctor" name="user_type_check" value="2">
+          <input type="radio" onchange="swapConfig(this)" class="doctorLogin checkValid" id="doctor" name="user_type_check" value="2">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Doctor</span>
         </label>
         <label>
-          <input type="radio" onchange="swapConfig(this)" id="pharmacy" name="user_type_check" value="3">
+          <input type="radio" onchange="swapConfig(this)" class="pharmistLogin checkValid" id="pharmacy" name="user_type_check" value="3">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Pharmacies</span>
         </label>

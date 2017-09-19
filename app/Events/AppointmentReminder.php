@@ -6,7 +6,7 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class SomeEvent extends Event
+class AppointmentReminder extends Event
 {
     use SerializesModels;
 
@@ -15,7 +15,7 @@ class SomeEvent extends Event
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($AppointmentReminder AppointmentReminder)
     {
         //
     }

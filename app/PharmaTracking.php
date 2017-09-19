@@ -12,7 +12,7 @@ class PharmaTracking extends Model
         'appointment_id', 'doctor_id', 'patient_id', 'amount', 'pack_time', 'packed_date', 'pharma_name', 'created_at', 'updated_at'
     ];
 
-    public function doctor(){
+    public function doctor() {
     	return $this->belongsTo(User::class, 'doctor_id', 'id');
     }
 

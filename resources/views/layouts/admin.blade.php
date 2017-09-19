@@ -20,7 +20,8 @@
      
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.css">
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.css" type="text/css" media="all" />
 
     
 
@@ -338,10 +339,13 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 
+     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
+    <script src="{{asset('admin/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.js"></script>
-	<script src="{{asset('admin/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('admin/assets/js/jquery-ui-timepicker-addon.js')}}" type="text/javascript"></script>
+
+	<script src="{{asset('admin/assets/js/jquery-ui-sliderAccess.js')}}" type="text/javascript"></script>
 
     <script src="{{asset('js/notify.js')}}" type="text/javascript"></script>
 

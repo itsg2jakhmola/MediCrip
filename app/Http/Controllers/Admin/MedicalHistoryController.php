@@ -31,7 +31,7 @@ class MedicalHistoryController extends Controller
      */
     public function index()
     {
-        $medical_detail = Medicalhistory::all();
+        $medical_detail = Medicalhistory::orderBy('created_at', 'DESC')->get();
         return view('admin.user.medical_history', compact('medical_detail'));    
         
     }

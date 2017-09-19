@@ -50,9 +50,31 @@
 
                                 <input type="hidden" value="{{$appointment_detail->appointment_id}}" name="appoint_id">
                                 <br>
+                                </td>
+                                <tr>
+                                <th>Set Reminder</th>
+                                <td><select name="set_reminder" class="form-control">
+                                <option value="">--Select--</option>
+                                @for($i=1; $i<=31; $i++)
+                                    @if($appointment_detail['prescription'] && $appointment_detail['prescription']->set_reminder == $i)
+                                        <option selected="selected" value="{{$appointment_detail['prescription']->set_reminder}}">{{$appointment_detail['prescription']->set_reminder}} Days Later</option>
+                                    @else
+                                        <option value="{{$i}}">{{$i}} Days Later</option>
+                                    @endif
+                                @endfor
+                                </select></td>
+                                </tr>
+                                <tr>
+                                    <th>Remarks</th>
+                                    <td><input type="text" class="form-control" value="{{ ($appointment_detail['prescription']) ? $appointment_detail['prescription']->remarks : '' }}" name="remarks" placeholder="Input remarks for reminder"></td>
+                                </tr>
+                                <tr>
+                                <td></td>
+                                <td>
                                 <button type="submit" class="btn btn-success">Submit</button>
                                 </form>
                                 </td>
+                                </tr>
                                 <tr>
                                 
                                 <th>See Medical History</th>
@@ -62,11 +84,9 @@
                                         'method' => 'POST',
                                         'route' => ['admin.docappoint_setting.format'])) !!}
                                   
-                                    @if ($auth->seen == 'Seen')
-                                        <button type="submit" disabled class="btn btn-xs btn-danger" title="showHistory"><i class="mdi mdi-delete">Show medical History</i></button>
-                                    @else
+                                    
                                         <button type="submit" class="btn btn-xs btn-danger" title="Delete"><i class="mdi mdi-delete">Show medical History </i></button>
-                                    @endif  
+                                   
 
                                     
                                      {!! Form::close() !!} 

@@ -11,7 +11,9 @@
 
                             @include('includes.flash')
 
+                                @if(Auth::user()->user_type == 1)
                                 <a href="{{route('admin.docappoint_setting.create')}}" class="btn btn-info btn-fill pull-right">Add Appointment</a>
+                                @endif
 
                                 <h4 class="title">Appointment History</h4>
                                 <p class="category"> <b> Total : {{count($appointment_list)}} </b> </p>

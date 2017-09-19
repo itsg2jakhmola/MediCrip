@@ -37,7 +37,7 @@ class UserController extends Controller
         ]);
 
 
-
+        
         User::find($id)->update($request->all());
 
         return redirect()->back()

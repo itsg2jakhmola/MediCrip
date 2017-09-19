@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SomeEvent;
+use App\Events\AppointmentReminder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -21,10 +21,10 @@ class EventListener
     /**
      * Handle the event.
      *
-     * @param  SomeEvent  $event
+     * @param  AppointmentReminder  $event
      * @return void
      */
-    public function handle(SomeEvent $event)
+    public function handle(AppointmentReminder $event)
     {
         echo "yes";die;
     }

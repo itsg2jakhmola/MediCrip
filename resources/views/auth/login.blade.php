@@ -12,18 +12,18 @@
           <span>Patients</span>
         </label>
         <label>
-          <input type="radio" onclick="showLogin(event);" class="LoginScreen" name="user_type" value="2">
+          <input type="radio" onclick="showLogin(event);" class="LoginScreen" id="doctorLogin" name="user_type" value="2">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Doctor</span>
         </label>
         <label>
-          <input type="radio" onclick="showLogin(event);" class="LoginScreen" name="user_type" value="3">
+          <input type="radio" onclick="showLogin(event);" class="LoginScreen" id="pharmistLogin" name="user_type" value="3">
           <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
           <span>Pharmacies</span>
         </label>
       </div>
 
-      <div class="LoginScreenSetting" style="display:none;">
+      <div class="LoginScreenSetting">
       <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
         <input type="text" name="email" class="form-control users" placeholder="Username/Email">
 
@@ -54,3 +54,9 @@
     </form>
   </aside>
 @endsection
+
+ @if(count($errors) > 0)
+        <script>
+            $("#patientLogin").click();
+        </script>
+    @endif 

@@ -26,14 +26,14 @@ class PharmacyController extends Controller
         $auth = Auth::user();
 
         if($auth->user_type == 1){
-            $prescription_list = DoctorPrescription::where('for_patient', $auth->id)->get()->load('doctor', 'pharmist', 'booking_request'); 
+            $prescription_list = DoctorPrescription::where('for_patient', $auth->id)->orderBy('created_at', 'DESC')->get()->load('doctor', 'pharmist', 'booking_request'); 
             
         }
         if($auth->user_type == 2){
-            $prescription_list = DoctorPrescription::where('from_doctor', $auth->id)->get()->load('doctor');    
+            $prescription_list = DoctorPrescription::where('from_doctor', $auth->id)->orderBy('created_at', 'DESC')->get()->load('doctor');    
         }
         if($auth->user_type == 3){
-            $prescription_list = DoctorPrescription::where('to_pharmist', $auth->id)->get()->load('doctor');    
+            $prescription_list = DoctorPrescription::where('to_pharmist', $auth->id)->orderBy('created_at', 'DESC')->get()->load('doctor');    
         }
         
     

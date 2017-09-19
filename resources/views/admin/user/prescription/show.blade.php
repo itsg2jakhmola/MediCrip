@@ -64,6 +64,16 @@
                         </tr>
 
                         <tr>
+                            <th>Reminder</th>
+                            <td>{{ ($prescription_detail->set_reminder) ? $prescription_detail->set_reminder : 'No Reminder' }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Reminder Notes</th>
+                            <td>{{ ($prescription_detail->remarks) ? $prescription_detail->remarks : 'No Reminder Note' }}</td>
+                        </tr>
+
+                        <tr>
                             <th>Pharmacy Name</th>
                             <td>{{ $prescription_detail['pharmist']->name }}</td>
                         </tr>
@@ -83,20 +93,25 @@
                         </tr>
 
                          @if(Auth::user()->user_type == 1)
-                            <tr>
+                        <tr>
                             <th>Pharmacy Phone</th>
                             <td>{{ $prescription_detail['pharmist']->phone_number }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Your Amount</th>
+                            <td>{{ ($prescription_detail['tracking']) ? $prescription_detail['tracking']->amount : 'Not set Yet' }}</td>
                         </tr>
 
 
                         <tr>
                             <th>Pickup Date</th>
-                            <td>{{ ($prescription_detail['tracking']->packed_date) ? $prescription_detail['tracking']->packed_date : 'Not Yet Ready' }}</td>
+                            <td>{{ ($prescription_detail['tracking']) ? $prescription_detail['tracking']->packed_date : 'Not Yet Ready' }}</td>
                         </tr>
 
                         <tr>
                             <th>Pickup Time</th>
-                            <td>{{ ($prescription_detail['tracking']->pack_time) ? $prescription_detail['tracking']->pack_time : 'Not yet Ready' }}</td>
+                            <td>{{ ($prescription_detail['tracking']) ? $prescription_detail['tracking']->pack_time : 'Not yet Ready' }}</td>
                         </tr>
 
                         

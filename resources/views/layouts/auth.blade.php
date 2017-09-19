@@ -32,9 +32,9 @@
       <nav class="navbar navbar-inverse navbar-static-top">
     <div class="top-nav">
     <ul>
-      <li><a href="#"><img src="images/patients-icon.png"> Patients</a></li>
-      <li><a href="#"><img src="images/doctor-icon.png"> Doctor</a></li>
-      <li><a href="#"><img src="images/pharmacies-icon.png"> Pharmacies</a></li>
+      <li><a href="javascript:void(0)" id="patientHead"><img src="images/patients-icon.png"> Patients</a></li>
+      <li><a href="javascript:void(0)" id="doctorHead"><img src="images/doctor-icon.png"> Doctor</a></li>
+      <li><a href="javascript:void(0)" id="pharmacyHead"><img src="images/pharmacies-icon.png"> Pharmacies</a></li>
     </ul>
     </div>
         <div class="container">
@@ -169,6 +169,40 @@
 
   <script src="js/bootstrap.min.js"></script>
   <script src="js/site.js"></script>
+  <script>
+
+  if(localStorage.getItem("patient")){
+      $("#patientLogin").click();
+       localStorage.removeItem("patient");
+
+  }
+
+  if(localStorage.getItem("doctor")){
+      $("#doctorLogin").click();
+      localStorage.removeItem("doctor");
+  }
+
+  if(localStorage.getItem("pharmist")){
+      $("#pharmistLogin").click();
+      localStorage.removeItem("pharmist");
+  }
+
+    $("#patientHead").click(function(){
+      $("#patientLogin").click();
+      $("#patient").click();
+    });
+
+    $("#doctorHead").click(function(){
+      $("#doctorLogin").click();
+      $("#doctor").click();
+    });
+
+    $("#pharmacyHead").click(function(){
+      $("#pharmistLogin").click();
+      $("#pharmacy").click();
+    });
+
+  </script>
 
 </body>
 </html>

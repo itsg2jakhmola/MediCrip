@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\User;
+use App\DefaultUser;
 use App\Appointment;
 use App\Notification;
 use App\AppointmentRequest;
@@ -57,31 +58,36 @@ class MyAppointmentController extends Controller
         $latitude = $user->lat;
         $longitude = $user->lng;
         
-        $nearBy = DB::select(
+        /*$nearBy = DB::select(
                "SELECT *,  ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( lat ) ) ) ) AS distance FROM users where user_type = 2 ORDER BY distance LIMIT 0 , 1
-            ");
+            ");*/
 
-        $request['request_to'] = $nearBy[0]->id;
+        $nearBy = DefaultUser::where('user_id', $user->id)
+                            ->first()->load('users');
+        
+        //Replacing  $nearby[0] concept from here
+
+        $request['request_to'] = $nearby['users']->id;
 
         $fixappointment = Appointment::create($request->all());
         if($fixappointment){
             $appointment = new AppointmentRequest;
             $appointment->user_id = $user->id;
             $appointment->appointment_id = $fixappointment->id;
-            $appointment->assign_to = $nearBy[0]->id;
-            $appointment->assigned_name = $nearBy[0]->name;
-            $appointment->lat = $nearBy[0]->lat;
-            $appointment->lng = $nearBy[0]->lng;
-            $appointment->distance = $nearBy[0]->distance;
+            $appointment->assign_to = $nearby['users']->id;
+            $appointment->assigned_name = $nearby['users']->name;
+            $appointment->lat = $nearby['users']->lat;
+            $appointment->lng = $nearby['users']->lng;
+            $appointment->distance = $nearby['users']->distance;
             $appointment->appointment_time = $fixappointment->appointment_time;
-            $appointment->speciality = $nearBy[0]->doctor_practice;
+            $appointment->speciality = $nearby['users']->doctor_practice;
             $appointment->notes = $fixappointment->notes;
             $appointment->save();
         }
 
         // add notification
         Notification::create(array(
-            'receiver_id' => $nearBy[0]->id,
+            'receiver_id' => $nearby['users']->id,
             'receiver_type' => 'doctor',
             'sender_id' => $user->id,
             'sender_type' => 'patient',
@@ -95,12 +101,12 @@ class MyAppointmentController extends Controller
             )),
         ));
 
-        $full_name = $nearBy[0]->name;
+        $full_name = $nearby['users']->name;
         $subject = "Appointment Request";
 
-        $this->sendEmail('auth.emails.appointment_request', ["full_name" => $full_name, "patient" => $user->name], $subject, $nearBy[0]->email, $this->_fromName);
+        $this->sendEmail('auth.emails.appointment_request', ["full_name" => $full_name, "patient" => $user->name], $subject, $nearby['users']->email, $this->_fromName);
 
-        return redirect()->route('admin.appointment_setting.index')->with('status', 'Your booking request has been sent to the ' . $nearBy[0]->name);
+        return redirect()->route('admin.appointment_setting.index')->with('status', 'Your booking request has been sent to the ' . $nearby['users']->name);
     }
 
     /**

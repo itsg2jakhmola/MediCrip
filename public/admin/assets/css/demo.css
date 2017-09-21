@@ -142,4 +142,9 @@
     position: absolute;
     top: 14px;
 }
+.find-doctor{
+    position: relative;
+    top: 5px;
+    float: left;
+}
 }

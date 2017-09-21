@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-
+use App\User;
+use App\DefaultUser;
+use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +18,8 @@ class FindUserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.suggest.index');
+        $userInfo = Auth::user();
+        return view('admin.user.suggest.index', compact('userInfo'));
     }
 
     /**
@@ -72,6 +75,24 @@ class FindUserController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function updateCreate(Request $request, $id=0)
+    {
+
+         $user = User::where('email', $request->doctoremail)
+                        ->orWhere('phone_number', $request->doctorphone)
+                        ->first();
+
+            $checkUser = DefaultUser::firstOrNew([
+                'user_id' => Auth::user()->id
+            ]);
+
+         $checkUser->user_id = Auth::user()->id;
+         $checkUser->assign_to = $user->id;
+         $checkUser->save();
+
+         return redirect()->back()->with('status', 'Your default doctor ' . $user->name . ' is saved');
     }
 
     /**

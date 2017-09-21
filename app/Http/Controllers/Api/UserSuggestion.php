@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -11,28 +12,54 @@ class UserSuggestion extends Controller
 {
     public function findUser(Request $request)
     {
-
 		$searchTerm = $_GET['term'];
+	    if(Auth::user()->user_type == 1){
+	    	$data = User::where('email', 'like', '%' . $searchTerm . '%')
+	    			->where('user_type', 2)->first();	
+	    }else{
+	    	$data = User::where('email', 'like', '%' . $searchTerm . '%')
+	    			->where('user_type', 1)->first();
+	    }
 	    
-	    $data = User::where('email', 'like', '%' . $searchTerm . '%')->first();
+	    if(!$data){
+	    	return \Response::json([
+		    	'success' => false,
+		    	'message' => "Data Not Found",
+		    	'response' => $data
+	    	], 400);
+	    }
 		    
 	    return \Response::json([
 	    	'success' => true,
-	    	'message' => $data->email
-	    ]);
+	    	'message' => $data->email,
+	    	'response' => $data
+	    ], 200);
      }
 
-     public function findUserByPhone(Request $request)
+   public function findUserByPhone(Request $request)
     {
 
 		$searchTermd = $_GET['term'];
 	    
-	    $result = User::where('phone_number', 'like', '%' . $searchTermd . '%')->first();
-		   
+	    if(Auth::user()->user_type == 1){
+	    	$result = User::where('phone_number', 'like', '%' . $searchTermd . '%')->where('user_type', 2)->first();
+		 }else{
+		 	$result = User::where('phone_number', 'like', '%' . $searchTermd . '%')->where('user_type', 1)->first();
+		 }
+
+		 if(!$result){
+	    	return \Response::json([
+		    	'success' => false,
+		    	'message' => "Data Not Found",
+		    	'response' => $result
+	    	], 400);
+	    }
+
 	    return \Response::json([
 	    	'success' => true,
-	    	'data' => (string) $result->phone_number
-	    ]);
+	    	'data' => (string) $result->phone_number,
+	    	'response' => $result
+	    ], 200);
      }
 
      

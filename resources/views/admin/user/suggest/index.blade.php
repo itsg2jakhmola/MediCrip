@@ -17,14 +17,27 @@
                                
                             </div>
                             <div class="content table-responsive table-full-width">
+
+                              <form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="{{ route('admin.find_user.updateCreate', ['id'=> $userInfo->id]) }}">
+
+                                {{ csrf_field() }}
+
                                 <div class="input-group">
-                                    <input type="text" id="skills" class="form-control" placeholder="Write doctor's email address" name="doctoremail">
+                                    
+                                    <input type="text" id="skills" class="form-control" placeholder="Write doctor's email address" name="doctoremail" style="margin-bottom: 7px;">
                                    
+
                                     <input type="text" id="phones" class="form-control" placeholder="Write doctor's phone number" name="doctorphone">
-                                    <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button">Send Request</button>
+
+
+                                    <span class="input-group-btn find-doctor">
+
+                                    <button type="submit" class="btn btn-success">Send Request</button>
+
                                     </span>
-                                  </div>
+                                </div>
+
+                            </form>
 
                             </div>
                         </div>

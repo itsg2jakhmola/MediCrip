@@ -37,6 +37,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
     //Route::get('/prescription', 'Admin\PrescriptionController@index');
     Route::resource('medical_history', 'Admin\MedicalHistoryController');
     Route::resource('find_user', 'Admin\FindUserController');
+    Route::post('send/suggestedUser/{id?}', ['uses' =>'Admin\FindUserController@updateCreate', 'as' => 'admin.find_user.updateCreate']);
+
     Route::resource('appointment_setting', 'Admin\MyAppointmentController');
     Route::resource('docappoint_setting', 'Admin\DoctorAppointmentController');
     Route::resource('pharmist_setting', 'Admin\PharmacyController');

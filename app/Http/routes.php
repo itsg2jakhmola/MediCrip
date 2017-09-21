@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
     //Route::get('/apppoinment', 'Admin\AppoinmentController@index');
     //Route::get('/prescription', 'Admin\PrescriptionController@index');
     Route::resource('medical_history', 'Admin\MedicalHistoryController');
+    Route::resource('find_user', 'Admin\FindUserController');
     Route::resource('appointment_setting', 'Admin\MyAppointmentController');
     Route::resource('docappoint_setting', 'Admin\DoctorAppointmentController');
     Route::resource('pharmist_setting', 'Admin\PharmacyController');
@@ -57,6 +58,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function()
 
 Route::group(['prefix' => '/api', 'namespace' => 'Api', 'middleware' => 'auth'], function () {
   // Notifications
+  Route::get('user/suggestion/email', ['uses' => 'UserSuggestion@findUser', 'as'=>'api.user.suggestion']);
+  Route::get('user/suggestion/phone', ['uses' => 'UserSuggestion@findUserByPhone', 'as'=>'api.user.suggestionphone']);
   Route::get('user/notify', 'NotificationController@index');
   Route::get('user/notifications', 'NotificationController@getMessages');
   Route::post('user/shownotifications', 'NotificationController@showMessages');

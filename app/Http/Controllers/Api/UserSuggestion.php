@@ -12,13 +12,17 @@ class UserSuggestion extends Controller
 {
     public function findUser(Request $request)
     {
+    	
+    	$findUserType = (string)$_GET['user_type'];
+
 		$searchTerm = $_GET['term'];
 	    if(Auth::user()->user_type == 1){
+	    	
 	    	$data = User::where('email', 'like', '%' . $searchTerm . '%')
-	    			->where('user_type', 2)->first();	
+	    			->where('user_type', $findUserType)->first();	
 	    }else{
 	    	$data = User::where('email', 'like', '%' . $searchTerm . '%')
-	    			->where('user_type', 1)->first();
+	    			->where('user_type', $findUserType)->first();
 	    }
 	    
 	    if(!$data){
@@ -39,12 +43,14 @@ class UserSuggestion extends Controller
    public function findUserByPhone(Request $request)
     {
 
-		$searchTermd = $_GET['term'];
+		$findUserType = (string)$_GET['user_type'];
+
+		$searchTerm = $_GET['term'];
 	    
 	    if(Auth::user()->user_type == 1){
-	    	$result = User::where('phone_number', 'like', '%' . $searchTermd . '%')->where('user_type', 2)->first();
+	    	$result = User::where('phone_number', 'like', '%' . $searchTermd . '%')->where('user_type', $findUserType)->first();
 		 }else{
-		 	$result = User::where('phone_number', 'like', '%' . $searchTermd . '%')->where('user_type', 1)->first();
+		 	$result = User::where('phone_number', 'like', '%' . $searchTermd . '%')->where('user_type', $findUserType)->first();
 		 }
 
 		 if(!$result){

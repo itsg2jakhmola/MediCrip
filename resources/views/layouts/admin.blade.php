@@ -157,7 +157,13 @@
                 <li {{ (current_page('find_user')) ? 'class=active' : ''}}>
                     <a href="{{url('/admin/find_user')}}">
                         <i class="pe-7s-search"></i>
-                        <p>Find Doctor</p>
+                        <p>
+                          @if(auth()->user()->user_type == 1)  
+                            Find Doctor
+                            @else
+                            Find Patient
+                          @endif
+                        </p>
                     </a>
                 </li>
                 

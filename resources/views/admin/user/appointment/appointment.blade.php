@@ -24,6 +24,7 @@
                                         <th>Nearby_doctor</th>
                                         <th>Seen By Doctor</th>
                                         <th>Appointment Date/Time</th>
+                                        <th>Action</th>
                                         
                                     </thead>
                                     <tbody>
@@ -32,9 +33,9 @@
                                 @foreach ($appointment_list as $info)
 
                                  <tr data-entry-id="{{ $info->id }}">
-                                    <td> {{ ucfirst($info->doctor_speciality) }} </td>
+                                    <td> {{ ($info->doctor_speciality) ? ucfirst($info->doctor_speciality) : '' }} </td>
                                     <td> {{ $info->notes }} </td>
-                                    <td> {{ $info['appointment_request']->assigned_name }}</td> 
+                                    <td> {{ $info['appointment_request']['assigned_name'] }}</td> 
                                     <td> {{ ($info['appointment_request']) ? $info['appointment_request']->seen : 'No'}}</td> 
                                     <td>
                                         <span style="display:none;">                                            

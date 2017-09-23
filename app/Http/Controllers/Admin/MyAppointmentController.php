@@ -62,11 +62,11 @@ class MyAppointmentController extends Controller
                "SELECT *,  ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( lat ) ) ) ) AS distance FROM users where user_type = 2 ORDER BY distance LIMIT 0 , 1
             ");*/
 
-        $nearBy = DefaultUser::where('user_id', $user->id)
+        $nearby = DefaultUser::where('user_id', $user->id)
                             ->first()->load('users');
         
         //Replacing  $nearby[0] concept from here
-
+    
         $request['request_to'] = $nearby['users']->id;
 
         $fixappointment = Appointment::create($request->all());

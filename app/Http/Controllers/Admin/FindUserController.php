@@ -79,9 +79,19 @@ class FindUserController extends Controller
 
     public function updateCreate(Request $request, $id=0)
     {
+        /*$rules = array(
+            'email' => 'required_without_all:email',
+            'phone' => 'required_without_all:phone',
+        );
+        $validator = \Validator::make($request->all(), $rules);*/
 
-         $user = User::where('email', $request->doctoremail)
-                        ->orWhere('phone_number', $request->doctorphone)
+            $this->validate($request, [
+                'email'     => 'required_without_all:email,phone',
+                'phone'  => 'required_without_all:email,phone',
+            ]);
+
+         $user = User::where('email', $request->email)
+                        ->orWhere('phone_number', $request->phone)
                         ->first();
 
             $checkUser = DefaultUser::firstOrNew([
@@ -104,5 +114,11 @@ class FindUserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showUser(Request $request) {
+
+        $userDetail = User::where('email', $request->email)->first();
+        return view('admin.user.suggest.show', compact('userDetail'));
     }
 }

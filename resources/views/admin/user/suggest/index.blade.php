@@ -13,7 +13,7 @@
                             @include('includes.flash')
 
                                 <h4 class="title">Find Doctor</h4>
-                               
+
                             </div>
                             <div class="content table-responsive table-full-width">
 
@@ -30,9 +30,9 @@
                                 </div>
 
                                 <div class="input-group">
-                                    
+
                                     <input type="text" id="skills" class="form-control" placeholder="Write doctor's email address" name="email" style="margin-right: 65%;">
-                                   
+
                                     <p class="help-block error">
                                                 {!! $errors->has('email') ? $errors->first('email') : '' !!}
                                     </p>
@@ -55,7 +55,7 @@
                                                 {!! $errors->has('invite_user') ? $errors->first('invite_user') : '' !!}
                                     </p> -->
 
-                                  
+
 
 
                                     <span class="input-group-btn find-doctor">
@@ -93,6 +93,7 @@
 
     var user_type = $("#findUserType").val();
     var skills = $("#skills").val();
+    
 
     var phone = $("#phones").val();
     // Load the Users from the server, passing the usertype as an extra param

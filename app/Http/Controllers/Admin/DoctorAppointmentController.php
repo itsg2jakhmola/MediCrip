@@ -26,7 +26,7 @@ class DoctorAppointmentController extends Controller
         $auth = Auth::user();
 
         $appointment_list = AppointmentRequest::where('assign_to', $auth->id)->orderBy('created_at', 'DESC')->get()->load('users');
-        
+
 
         return view('admin.user.doctor_appointment.index', compact('appointment_list'));
     }
@@ -54,13 +54,13 @@ class DoctorAppointmentController extends Controller
 
     public function updateCreate(Request $request, $id=0)
     {
-        
+
         $patient = User::find($request->to_patient);
 
         $auth = Auth::user();
         $latitude = $patient->lat;
         $longitude = $patient->lng;
-        
+
         $nearBy = DB::select(
                "SELECT *,  ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( lat ) ) ) ) AS distance FROM users where user_type = 3 ORDER BY distance LIMIT 0 , 1
             ");
@@ -84,7 +84,7 @@ class DoctorAppointmentController extends Controller
 
             /*$appointmentReminder = AppointmentReminder::where('id',$order_id)->with('feastDate','user')->first();
             //event(new AppointmentReminder($doctorPrescription));*/
-       
+
             if($doctorPrescription->exists){
                 // add notification
                 Notification::create(array(
@@ -108,7 +108,13 @@ class DoctorAppointmentController extends Controller
 
             $this->sendEmail('auth.emails.prescription_update', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $nearBy[0]->email, $this->_fromName);
 
-            }else{      
+            $patient = User::find($request['to_patient']);
+            // If patient has default pharmacy, send mail to default pharmacy
+            if($patient && $pharma = $patient->hasDefaultPharmacy()){
+              $this->sendEmail('auth.emails.prescription_update', ["full_name" => $full_name, "doctor" => $auth->name], $subject, $pharma->email, $this->_fromName);
+            }
+
+            }else{
 
                 // add notification
                         Notification::create(array(
@@ -158,7 +164,7 @@ class DoctorAppointmentController extends Controller
 
         $appointment_detail = AppointmentRequest::where('id', $id)->first()->load('users','prescription');
 
-        
+
         return view('admin.user.doctor_appointment.show', compact('appointment_detail', 'auth'));
     }
 
